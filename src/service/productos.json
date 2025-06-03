@@ -1,0 +1,512 @@
+[
+  {
+    "id": 1,
+    "category": "Ramos",
+    "name": "Ramo de Rosas Rojas Clásico",
+    "description": "Un ramo clásico y elegante con 12 rosas rojas frescas, ideal para expresar amor y pasión en cualquier ocasión especial.",
+    "price": 2500,
+    "images": [
+      "/images/rosas-rojas-1.jpg",
+      "/images/rosas-rojas-2.jpg"
+    ],
+    "stock": 10,
+    "tags": ["rosas", "romántico", "clásico"],
+    "information": "Flores frescas cortadas el mismo día. Se recomienda mantener en agua y en lugar fresco.",
+    "reviews": [
+      {
+        "user": "Ana",
+        "rating": 5,
+        "comment": "Las rosas estaban frescas y hermosas, llegó rápido y en perfecto estado."
+      },
+      {
+        "user": "Carlos",
+        "rating": 4,
+        "comment": "Muy buen ramo, el color es intenso y duró bastante."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "category": "Ramos",
+    "name": "Ramo de Tulipanes de Primavera",
+    "description": "Colorido bouquet de tulipanes de temporada que alegra cualquier espacio con su belleza natural y vibrante.",
+    "price": 1800,
+    "images": [
+      "/images/tulipanes-primavera-1.jpg",
+      "/images/tulipanes-primavera-2.jpg"
+    ],
+    "stock": 8,
+    "tags": ["tulipanes", "primavera", "colorido"],
+    "information": "Recomendado cambiar el agua cada dos días para prolongar su frescura.",
+    "reviews": [
+      {
+        "user": "María",
+        "rating": 5,
+        "comment": "Me encantaron los colores vivos y la presentación."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "category": "Ramos",
+    "name": "Ramo Mixto Primavera",
+    "description": "Una mezcla fresca y variada de flores de temporada, perfecta para alegrar cualquier habitación o regalar con cariño.",
+    "price": 2800,
+    "images": [
+      "/images/ramo-mixto-primavera-1.jpg",
+      "/images/ramo-mixto-primavera-2.jpg"
+    ],
+    "stock": 12,
+    "tags": ["mezcla", "primavera", "fresco"],
+    "information": "Incluye girasoles, margaritas y flores silvestres. Ideal para decoración interior.",
+    "reviews": [
+      {
+        "user": "Lucía",
+        "rating": 4,
+        "comment": "Muy buen ramo, la variedad de flores es hermosa."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "category": "Ramos",
+    "name": "Ramo de Lirios Blancos",
+    "description": "Ramo elegante de lirios blancos que simbolizan pureza y paz, ideal para momentos especiales y ceremonias.",
+    "price": 2200,
+    "images": [
+      "/images/lirios-blancos-1.jpg",
+      "/images/lirios-blancos-2.jpg"
+    ],
+    "stock": 7,
+    "tags": ["lirios", "blanco", "elegante"],
+    "information": "Flores delicadas que requieren cuidados especiales, mantener en agua fresca y sin luz directa.",
+    "reviews": [
+      {
+        "user": "Esteban",
+        "rating": 5,
+        "comment": "Los lirios estaban frescos y hermosos, excelente presentación."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "category": "Ramos",
+    "name": "Ramo de Girasoles Vibrantes",
+    "description": "Ramo lleno de energía con girasoles grandes y brillantes, ideal para alegrar el día de alguien especial.",
+    "price": 2000,
+    "images": [
+      "/images/girasoles-1.jpg",
+      "/images/girasoles-2.jpg"
+    ],
+    "stock": 15,
+    "tags": ["girasoles", "vibrante", "alegría"],
+    "information": "Recomendamos mantener en un lugar fresco y cambiar el agua cada dos días para prolongar su vida.",
+    "reviews": [
+      {
+        "user": "Paula",
+        "rating": 5,
+        "comment": "¡Los girasoles eran hermosos y duraron mucho tiempo!"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "category": "Ramos",
+    "name": "Ramo de Peonías Rosadas",
+    "description": "Elegante ramo de peonías rosadas, flores delicadas y con aroma suave, perfectas para un regalo especial.",
+    "price": 3000,
+    "images": [
+      "/images/peonias-1.jpg",
+      "/images/peonias-2.jpg"
+    ],
+    "stock": 6,
+    "tags": ["peonías", "rosado", "aroma"],
+    "information": "Requieren cuidado especial, mantener en agua limpia y evitar luz directa.",
+    "reviews": [
+      {
+        "user": "Sofía",
+        "rating": 5,
+        "comment": "El ramo llegó perfecto y el aroma era delicioso."
+      }
+    ]
+  },
+
+  {
+    "id": 7,
+    "category": "Plantas",
+    "name": "Cactus en Maceta Decorativa",
+    "description": "Planta de cactus resistente y decorativa, perfecta para interiores y para quienes buscan bajo mantenimiento.",
+    "price": 1500,
+    "images": [
+      "/images/cactus-maceta-1.jpg",
+      "/images/cactus-maceta-2.jpg"
+    ],
+    "stock": 20,
+    "tags": ["cactus", "decoración", "interiores"],
+    "information": "Requiere riego escaso, ideal para ambientes secos y con buena luz indirecta.",
+    "reviews": [
+      {
+        "user": "Javier",
+        "rating": 4,
+        "comment": "Muy bonita planta, fácil de cuidar."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "category": "Plantas",
+    "name": "Helecho en Maceta",
+    "description": "Helecho verde y frondoso que aporta frescura y vida a cualquier espacio interior.",
+    "price": 1800,
+    "images": [
+      "/images/helecho-1.jpg",
+      "/images/helecho-2.jpg"
+    ],
+    "stock": 15,
+    "tags": ["helecho", "verde", "frescura"],
+    "information": "Prefiere sombra y humedad constante, ideal para interiores.",
+    "reviews": [
+      {
+        "user": "Marcos",
+        "rating": 5,
+        "comment": "Excelente planta, se mantiene verde todo el año."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "category": "Plantas",
+    "name": "Orquídea Blanca en Maceta",
+    "description": "Orquídea blanca elegante que aporta un toque sofisticado a cualquier habitación.",
+    "price": 3200,
+    "images": [
+      "/images/orquidea-blanca-1.jpg",
+      "/images/orquidea-blanca-2.jpg"
+    ],
+    "stock": 5,
+    "tags": ["orquídea", "blanco", "sofisticado"],
+    "information": "Necesita luz indirecta y riego moderado para mantener sus flores frescas.",
+    "reviews": [
+      {
+        "user": "Claudia",
+        "rating": 5,
+        "comment": "La orquídea llegó en perfectas condiciones y floreció rápido."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "category": "Plantas",
+    "name": "Suculenta Variada en Maceta",
+    "description": "Pequeña suculenta variada, ideal para decorar escritorios o espacios pequeños con estilo minimalista.",
+    "price": 1200,
+    "images": [
+      "/images/suculenta-1.jpg",
+      "/images/suculenta-2.jpg"
+    ],
+    "stock": 25,
+    "tags": ["suculenta", "minimalista", "decoración"],
+    "information": "Necesita poca agua y luz indirecta, perfecta para principiantes.",
+    "reviews": [
+      {
+        "user": "Luis",
+        "rating": 4,
+        "comment": "Muy bonita y fácil de cuidar."
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "category": "Plantas",
+    "name": "Planta de Aloe Vera",
+    "description": "Aloe vera en maceta, planta medicinal muy apreciada por sus propiedades para la piel y la salud.",
+    "price": 2000,
+    "images": [
+      "/images/aloe-vera-1.jpg",
+      "/images/aloe-vera-2.jpg"
+    ],
+    "stock": 10,
+    "tags": ["aloe vera", "medicinal", "salud"],
+    "information": "Requiere luz brillante y riego moderado, evitar encharcamientos.",
+    "reviews": [
+      {
+        "user": "Ana",
+        "rating": 5,
+        "comment": "Perfecta para mi hogar, la uso para todo."
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "category": "Plantas",
+    "name": "Palma Areca",
+    "description": "Palma decorativa para interiores que aporta un aire tropical y fresco.",
+    "price": 2800,
+    "images": [
+      "/images/palma-areca-1.jpg",
+      "/images/palma-areca-2.jpg"
+    ],
+    "stock": 8,
+    "tags": ["palma", "decoración", "interior"],
+    "information": "Prefiere luz indirecta y riego moderado, ideal para oficinas y hogares.",
+    "reviews": [
+      {
+        "user": "Jorge",
+        "rating": 4,
+        "comment": "Queda genial en la sala, fácil de cuidar."
+      }
+    ]
+  },
+
+  {
+    "id": 13,
+    "category": "Accesorios",
+    "name": "Jarrón de Cerámica Blanco",
+    "description": "Jarrón elegante de cerámica blanca, ideal para complementar cualquier arreglo floral.",
+    "price": 1200,
+    "images": [
+      "/images/jarron-ceramica-1.jpg",
+      "/images/jarron-ceramica-2.jpg"
+    ],
+    "stock": 30,
+    "tags": ["jarrón", "cerámica", "decoración"],
+    "information": "Medidas: 25cm alto, 15cm diámetro. Ideal para ramos medianos.",
+    "reviews": [
+      {
+        "user": "Marta",
+        "rating": 5,
+        "comment": "El jarrón es muy bonito y de buena calidad."
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "category": "Accesorios",
+    "name": "Cinta Decorativa para Ramos",
+    "description": "Cinta de tela para decorar ramos y arreglos florales, disponible en varios colores.",
+    "price": 300,
+    "images": [
+      "/images/cinta-decorativa-1.jpg",
+      "/images/cinta-decorativa-2.jpg"
+    ],
+    "stock": 50,
+    "tags": ["cinta", "decoración", "ramos"],
+    "information": "Ancho: 5cm. Se puede cortar a medida según necesidad.",
+    "reviews": [
+      {
+        "user": "Lucía",
+        "rating": 4,
+        "comment": "Muy útil y bonita, da un toque especial."
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "category": "Accesorios",
+    "name": "Tarjeta de Mensaje Personalizado",
+    "description": "Tarjeta para agregar mensajes personalizados en regalos o arreglos florales.",
+    "price": 150,
+    "images": [
+      "/images/tarjeta-mensaje-1.jpg"
+    ],
+    "stock": 100,
+    "tags": ["tarjeta", "mensaje", "personalizado"],
+    "information": "Tamaño A6, papel mate de alta calidad.",
+    "reviews": [
+      {
+        "user": "Carlos",
+        "rating": 5,
+        "comment": "Perfecta para añadir un detalle personal."
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "category": "Accesorios",
+    "name": "Florero de Vidrio Transparente",
+    "description": "Florero de vidrio elegante y sencillo, perfecto para mostrar cualquier arreglo floral.",
+    "price": 1100,
+    "images": [
+      "/images/florero-vidrio-1.jpg",
+      "/images/florero-vidrio-2.jpg"
+    ],
+    "stock": 25,
+    "tags": ["florero", "vidrio", "decoración"],
+    "information": "Altura: 30cm, diámetro: 15cm.",
+    "reviews": [
+      {
+        "user": "María",
+        "rating": 5,
+        "comment": "Muy buen florero, resistente y elegante."
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "category": "Accesorios",
+    "name": "Espuma Floral para Arreglos",
+    "description": "Espuma para arreglos florales que ayuda a mantener las flores hidratadas y en su lugar.",
+    "price": 400,
+    "images": [
+      "/images/espuma-floral-1.jpg"
+    ],
+    "stock": 40,
+    "tags": ["espuma", "arreglos", "floral"],
+    "information": "Peso: 500g, ideal para arreglos grandes y medianos.",
+    "reviews": [
+      {
+        "user": "Ana",
+        "rating": 4,
+        "comment": "Funciona bien para mantener los arreglos frescos."
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "category": "Accesorios",
+    "name": "Cesta de Mimbre",
+    "description": "Cesta artesanal de mimbre para presentar ramos y regalos con estilo rústico y natural.",
+    "price": 1600,
+    "images": [
+      "/images/cesta-mimbre-1.jpg",
+      "/images/cesta-mimbre-2.jpg"
+    ],
+    "stock": 15,
+    "tags": ["cesta", "mimbre", "artesanal"],
+    "information": "Medidas: 40cm x 30cm x 25cm, resistente y ligera.",
+    "reviews": [
+      {
+        "user": "Jorge",
+        "rating": 5,
+        "comment": "Le da un toque especial a los arreglos."
+      }
+    ]
+  },
+
+  {
+    "id": 19,
+    "category": "Plantas de Exterior",
+    "name": "Árbol de Lavanda",
+    "description": "Árbol pequeño de lavanda que aporta aroma fresco y relajante al jardín o terraza.",
+    "price": 3500,
+    "images": [
+      "/images/lavanda-1.jpg",
+      "/images/lavanda-2.jpg"
+    ],
+    "stock": 8,
+    "tags": ["lavanda", "exterior", "aroma"],
+    "information": "Prefiere lugares soleados y riego moderado.",
+    "reviews": [
+      {
+        "user": "Lucía",
+        "rating": 5,
+        "comment": "Aroma delicioso y planta muy saludable."
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "category": "Plantas de Exterior",
+    "name": "Rosa Silvestre",
+    "description": "Rosa silvestre perfecta para jardines, con flores resistentes y coloridas.",
+    "price": 2800,
+    "images": [
+      "/images/rosa-silvestre-1.jpg",
+      "/images/rosa-silvestre-2.jpg"
+    ],
+    "stock": 10,
+    "tags": ["rosa", "silvestre", "exterior"],
+    "information": "Requiere sol directo y riego frecuente.",
+    "reviews": [
+      {
+        "user": "Carlos",
+        "rating": 4,
+        "comment": "Buena planta para exteriores, resistente."
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "category": "Plantas de Exterior",
+    "name": "Lavanda en Maceta",
+    "description": "Lavanda en maceta para decorar terrazas y balcones con su aroma y color característicos.",
+    "price": 3200,
+    "images": [
+      "/images/lavanda-maceta-1.jpg",
+      "/images/lavanda-maceta-2.jpg"
+    ],
+    "stock": 12,
+    "tags": ["lavanda", "maceta", "exterior"],
+    "information": "Prefiere sol y riego moderado, ideal para exteriores.",
+    "reviews": [
+      {
+        "user": "Sofía",
+        "rating": 5,
+        "comment": "Muy buena planta, resistente y aromática."
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "category": "Plantas de Exterior",
+    "name": "Helecho de Jardín",
+    "description": "Helecho robusto y frondoso, perfecto para zonas de sombra en el jardín.",
+    "price": 2700,
+    "images": [
+      "/images/helecho-jardin-1.jpg",
+      "/images/helecho-jardin-2.jpg"
+    ],
+    "stock": 7,
+    "tags": ["helecho", "jardín", "exterior"],
+    "information": "Requiere sombra y riego regular.",
+    "reviews": [
+      {
+        "user": "Juan",
+        "rating": 4,
+        "comment": "Muy buena planta para zonas sombreadas."
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "category": "Plantas de Exterior",
+    "name": "Cactus Gigante",
+    "description": "Imponente cactus gigante para jardines, de bajo mantenimiento y gran impacto visual.",
+    "price": 4500,
+    "images": [
+      "/images/cactus-gigante-1.jpg",
+      "/images/cactus-gigante-2.jpg"
+    ],
+    "stock": 4,
+    "tags": ["cactus", "gigante", "exterior"],
+    "information": "Necesita sol pleno y riego escaso.",
+    "reviews": [
+      {
+        "user": "Ana",
+        "rating": 5,
+        "comment": "Impresionante planta, se ve espectacular en el jardín."
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "category": "Plantas de Exterior",
+    "name": "Árbol Bonsái",
+    "description": "Mini árbol bonsái para decoración y relajación, ideal para interiores o terrazas.",
+    "price": 3900,
+    "images": [
+      "/images/bonsai-1.jpg",
+      "/images/bonsai-2.jpg"
+    ],
+    "stock": 9,
+    "tags": ["bonsái", "mini", "decoración"],
+    "information": "Requiere cuidados específicos, luz indirecta y riego moderado.",
+    "reviews": [
+      {
+        "user": "Pedro",
+        "rating": 5,
+        "comment": "Un bonsái hermoso, requiere cuidados pero vale la pena."
+      }
+    ]
+  }
+]
