@@ -15,7 +15,7 @@ function Products() {
   return (
     <>
       <div className="flex flex-col w-[80vw] mx-auto mt-20">
-        <div className="flex gap-4 mb-6">
+        <div className="flex md:flex-row flex-col gap-4 mb-6">
           {categories.map((category) => (
             <button
               key={category}

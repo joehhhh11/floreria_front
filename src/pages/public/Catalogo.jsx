@@ -28,7 +28,7 @@ const Catalogo = () => {
   });
 
   return (
-    <div className="p-6 w-[70vw] mx-auto">
+    <div className="p-6 md:w-[70vw] mx-auto">
       <FilterPanel
         category={category}
         setCategory={setCategory}

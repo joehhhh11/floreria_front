@@ -1,5 +1,9 @@
+import { Link } from 'react-router-dom'
 const ProductCard = ({ product, isFeatured }) => {
   return (
+     <Link to={`/producto/${product.id}`} className={`block ${
+      isFeatured ? 'md:col-span-2 md:row-span-2' : ''
+    }`}>
     <div
       className={`  rounded-lg p-4  transition cursor-pointer
         ${isFeatured ? 'md:col-span-2 md:row-span-2' : ''}`}
@@ -23,6 +27,7 @@ const ProductCard = ({ product, isFeatured }) => {
       <p className="text-sm text-gray-600">${product.price}</p>
       </div>
     </div>
+    </Link>
   )
 }
 

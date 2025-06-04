@@ -23,7 +23,9 @@
         "rating": 4,
         "comment": "Muy buen ramo, el color es intenso y duró bastante."
       }
-    ]
+    ],
+    "medidas": "10 x 10 x 10 cm"
+    
   },
   {
     "id": 2,
@@ -44,7 +46,9 @@
         "rating": 5,
         "comment": "Me encantaron los colores vivos y la presentación."
       }
-    ]
+    ],
+    "medidas": "10 x 10 x 10 cm"
+    
   },
   {
     "id": 3,

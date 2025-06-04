@@ -1,45 +1,69 @@
-import React from 'react'
+import React from "react";
 
 function Footer() {
-  return (
-    <>
-        <footer className='bg-flor-2'>
-            <div className='grid grid-cols-4 pt-5 pb-5'>
-                <div className='flex justify-center items-center'>
-                    <img src="/logo2.png" alt="" />
-                </div>
-                <div className='flex items-center'>
-                    <ul>
-                        <li><a href="">Categories</a></li>
-                        <li><a href="">Sobre nosotros</a></li>
-                        <li><a href="">Catalogo</a></li>
-                        <li><a href="">Contacto</a></li>
-                    </ul>
-                </div>
-                <div className='flex items-center'>
-                     <ul>
-                        <li><a href="">Soporte</a></li>
-                        <li><a href="">Delivery</a></li>
-                        <li><a href="">Ayuda y soporte</a></li>
-                        <li><a href="">24/7 Servicios</a></li>
-                    </ul>
-                </div>
-                <div className='flex items-center'>
-                    <ul>
-                        <li><a href="">+123 45678 945</a></li>
-                        <li><a href="">floreria@gmail.com</a></li>
-                        <li><a href="">123 Miraflores</a></li>
-                        <li><a href="">8:00 am - 8:00 pm</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div className='flex justify-center pb-5 pt-5'>
-                <p> Floreria Lulu © 2023 Todos los derechos reservados</p>
-            </div>
+  const footerData = [
+    {
+      type: "logo",
+      content: <img src="/logo2.png" alt="Logo" className="h-16" />,
+    },
+    {
+      title: "Enlaces",
+      items: [
+        { label: "Categorías", href: "#" },
+        { label: "Sobre nosotros", href: "#" },
+        { label: "Catálogo", href: "#" },
+        { label: "Contacto", href: "#" },
+      ],
+    },
+    {
+      title: "Soporte",
+      items: [
+        { label: "Soporte", href: "#" },
+        { label: "Delivery", href: "#" },
+        { label: "Ayuda y soporte", href: "#" },
+        { label: "24/7 Servicios", href: "#" },
+      ],
+    },
+    {
+      title: "Contacto",
+      items: [
+        { label: "+123 45678 945" },
+        { label: "floreria@gmail.com" },
+        { label: "123 Miraflores" },
+        { label: "8:00 am - 8:00 pm" },
+      ],
+    },
+  ];
 
-        </footer>
-    </>
-  )
+  return (
+    <footer className="bg-flor-2 text-black">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 pt-10 pb-10 px-6">
+        {footerData.map((section, index) => (
+          <div key={index} className="flex flex-col items-start justify-center px-2">
+            {section.type === "logo" ? (
+              <div className="w-full flex justify-center">{section.content}</div>
+            ) : (
+              <>
+                <h4 className="font-semibold mb-3 md:text-left text-center w-full">{section.title}</h4>
+                <ul className="space-y-2 text-sm md:text-left text-center w-full">
+                  {section.items.map((item, i) => (
+                    <li key={i}>
+                      <a href={item.href || "#"} className="hover:underline">
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="text-center text-sm border-t border-white/20 pt-4 pb-6">
+        Florería Lulu © 2023 Todos los derechos reservados
+      </div>
+    </footer>
+  );
 }
 
-export default Footer
+export default Footer;
