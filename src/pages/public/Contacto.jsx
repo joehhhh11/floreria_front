@@ -1,8 +1,11 @@
 import React from 'react'
+import ContactoForm from '@/components/Inicio/Contacto'
 
 function Contacto() {
   return (
-    <div>Contacto</div>
+    <div className="container mx-auto">
+      <ContactoForm />
+    </div>
   )
 }
 
