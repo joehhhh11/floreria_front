@@ -30,12 +30,10 @@ function Navbar() {
         <div className="flex items-center">
           {isSignedIn && <p className="hidden md:block mr-6">Hola, {user?.firstName}</p>}
 
-          {/* Desktop links */}
           <div className="hidden md:block">
             <NavbarLinks />
           </div>
 
-          {/* Hamburger */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden ml-2 focus:outline-none"
@@ -56,19 +54,16 @@ function Navbar() {
           </button>
         </div>
 
-        {/* Logo */}
         <div className="md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
           <Link to="/">
             <img src="/logoFloreria.png" alt="logo" className="h-10" />
           </Link>
         </div>
 
-        {/* Desktop icons */}
         <div className="hidden md:flex gap-5">
           <NavbarIcons icons={icons} isSignedIn={isSignedIn} />
         </div>
 
-        {/* Mobile menu */}
         {isMenuOpen && (
           <div className="absolute top-full left-0 w-full bg-flor-2 shadow-md md:hidden z-10">
             <NavbarLinks onClick={closeMenu} />

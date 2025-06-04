@@ -10,7 +10,7 @@ const ProductCard = ({ product, isFeatured }) => {
       style={{
         gridColumn: isFeatured ? 'span 2' : 'span 1',
         gridRow: isFeatured ? 'span 2' : 'span 1',
-        height: isFeatured ? '900px' : '45vh', // altura más grande para ocupar espacio
+        height: isFeatured ? '900px' : '45vh',
       }}
     >
       <img

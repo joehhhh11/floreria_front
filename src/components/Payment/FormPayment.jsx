@@ -10,7 +10,6 @@ function FormPayment() {
       <div className="border-2 border-flor rounded-2xl p-10">
         <h2 className="text-xl font-semibold mb-4">Dirección de envío</h2>
         <form className="space-y-6">
-          {/* Fila 1: Nombre y Apellido */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col">
               <label htmlFor="firstName" className="mb-1 font-medium">
@@ -36,7 +35,6 @@ function FormPayment() {
             </div>
           </div>
 
-          {/* Fila 2: Dirección */}
           <div className="flex flex-col">
             <label htmlFor="address" className="mb-1 font-medium">
               Dirección
@@ -49,7 +47,6 @@ function FormPayment() {
             />
           </div>
 
-          {/* Fila 3: Apartamento, Ciudad, Teléfono */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex flex-col">
               <label htmlFor="apartment" className="mb-1 font-medium">

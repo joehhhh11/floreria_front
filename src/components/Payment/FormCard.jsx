@@ -7,7 +7,6 @@ function FormCard() {
       <div className="border-2 border-flor rounded-2xl p-10">
         <h2 className="text-xl font-semibold mb-4">Información de Pago</h2>
         <form className="space-y-6">
-          {/* Fila 1: Número de tarjeta Visa (todo el ancho) */}
           <div className="flex flex-col">
             <label htmlFor="cardNumber" className="mb-1 font-medium">
               Número de tarjeta Visa
@@ -22,7 +21,6 @@ function FormCard() {
             />
           </div>
 
-          {/* Fila 2: Fecha de emisión, CVV, Últimos 4 dígitos */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex flex-col">
               <label htmlFor="expiryDate" className="mb-1 font-medium">
@@ -63,7 +61,6 @@ function FormCard() {
             </div>
           </div>
 
-          {/* Fila 3: Nombre del titular */}
           <div className="flex flex-col">
             <label htmlFor="cardHolder" className="mb-1 font-medium">
               Nombre del titular

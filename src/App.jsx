@@ -30,7 +30,6 @@ function App() {
 
       <Route path="/admin" element={<AdminLayout />}>
         <Route path="productos" element={<Products />} />{" "}
-        {/* /admin/productos */}
       </Route>
     </Routes>
   );

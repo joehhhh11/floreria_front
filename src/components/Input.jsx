@@ -8,7 +8,7 @@ const Input = ({
   value,
   onChange,
   placeholder,
-  icon: Icon, // Recibe un componente de ícono
+  icon: Icon, 
   className = "",
 }) => {
   return (

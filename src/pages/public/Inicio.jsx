@@ -6,7 +6,7 @@ import Categories from "@/components/Inicio/Catalogo";
 function Inicio() {
   return (
     <>
-      {/* Sección de bienvenida */}
+      {/* bienvenida */}
       <div className="flex w-[80vw] justify-center mx-auto md:flex-row flex-col">
         <section className="md:w-1/2 flex flex-col justify-center items-start  space-y-5">
           <h1 className="text-6xl">
@@ -26,9 +26,9 @@ function Inicio() {
           <img src="img1.png" alt="" className="w-[600px] object-contain" />
         </div>
       </div>
-      {/* Sección de productos */}
+      {/* productos */}
       <Products />
-      {/* Sección de información */}
+      {/* información */}
       <div className="flex flex-col lg:flex-row justify-center items-center w-full max-w-screen-xl mx-auto mt-20 px-4 gap-10">
         <div className="lg:w-1/2 w-full">
           <h2 className="text-2xl lg:text-6xl mb-6">
@@ -63,7 +63,7 @@ function Inicio() {
 
       <Categories />
 
-      {/* Sección de promoción */}
+      {/* promoción */}
       <div className="flex flex-col lg:flex-row justify-center items-center w-full max-w-screen-xl mx-auto mt-20 px-4 gap-10">
         <div className="lg:w-1/2 w-full">
           <h2 className="text-2xl lg:text-6xl mb-6">
@@ -89,7 +89,7 @@ function Inicio() {
         </div>
       </div>
 
-      {/* Sección de contacto */}
+      {/* contacto */}
       <div className="flex flex-col lg:flex-row w-full max-w-screen-xl mx-auto mt-36 mb-20 px-4 gap-10">
         <div className="lg:w-1/3 w-full">
           <img src="img1.png" alt="" className="w-full max-w-[500px] object-contain mx-auto" />
