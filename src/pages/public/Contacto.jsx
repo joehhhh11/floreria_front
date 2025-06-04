@@ -1,76 +1,116 @@
-import React from 'react';
+import React, { useState } from "react";
 
 function Contacto() {
+  const [formData, setFormData] = useState({
+    nombre: "",
+    email: "",
+    telefono: "",
+    mensaje: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Formulario enviado:", formData);
+    setFormData({
+      nombre: "",
+      email: "",
+      telefono: "",
+      mensaje: "",
+    });
+  };
+
   return (
-    <div className=" text-black px-4 py-20">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 bg-flor-2 rounded-2xl shadow-lg overflow-hidden">
-        {/* Columna izquierda: Información */}
-        <div className="p-8 flex flex-col justify-center">
-          <h2 className="text-3xl font-bold mb-4">Contáctanos</h2>
-          <p className="mb-4 text-black">
-            Estamos aquí para ayudarte. Si tienes alguna pregunta, no dudes en enviarnos un mensaje.
+    <div className="container mx-auto px-4 py-16 min-h-screen ">
+      <h1 className="text-4xl mb-16">Contacto</h1>
+      
+      <div className="flex gap-12 max-w-6xl mx-auto">
+        <div className="flex-1">
+          <div className="relative mb-8">
+            <img
+              src="/img1.png"
+              alt="Flores"
+              className="rounded-full w-48 h-48 object-cover"
+            />
+          </div>
+          
+          <h2 className="text-3xl mb-4">
+            We take <span className="text-[#FF4F4F]">flowers</span> personally,
+            <br />with your thoughts in hand...
+          </h2>
+          
+          <p className="text-gray-600 mb-8 max-w-md">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean 
+            commodo ligula eget dolor. Aenean massa. Cum sociis natoque 
+            penatibus et magnis dis parturient montes, nascetur ridiculus mus.
           </p>
 
-          <div className="space-y-4 text-sm text-black">
-            <div>
-              <span className="font-semibold text-black">Horario:</span> Lunes a Viernes, 9:00 AM - 6:00 PM
-            </div>
-            <div>
-              <span className="font-semibold text-black">Ubicación:</span> Calle Ficticia 123, Ciudad, País
-            </div>
-            <div>
-              <span className="font-semibold text-black">Teléfono:</span> +123 456 7890
-            </div>
-            <div>
-              <span className="font-semibold text-black">Correo:</span> contacto@ejemplo.com
-            </div>
-          </div>
+          <img
+            src="/img1.png"
+            alt="Firma"
+            className="w-32"
+          />
         </div>
 
-        {/* Columna derecha: Formulario */}
-        <div className="p-8 bg-flor rounded-r-2xl">
-          <form className="space-y-4">
-            <div>
-              <label className="block text-sm mb-1 text-black" htmlFor="name">
-                Nombre
-              </label>
-              <input
-                type="text"
-                id="name"
-                className="w-full px-4 py-2 rounded-lg bg-flor-2 border border-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-flor-3"
-                placeholder="Tu nombre"
-              />
-            </div>
+        <div className="flex-1 bg-white p-8 rounded-lg shadow-sm">
+          <h3 className="text-2xl mb-6">Get in Touch!</h3>
+          <p className="text-gray-600 mb-8">
+            Class aptent taciti sociosqu ad litora torquent per conubia nostr. Mauris in erat 
+            patullam ac urna eu felis dignin
+          </p>
 
-            <div>
-              <label className="block text-sm mb-1 text-black" htmlFor="email">
-                Correo electrónico
-              </label>
-              <input
-                type="email"
-                id="email"
-                className="w-full px-4 py-2 rounded-lg bg-flor-2 border border-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-flor-3"
-                placeholder="tucorreo@ejemplo.com"
-              />
-            </div>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <input
+              type="text"
+              placeholder="Your Full Name"
+              name="nombre"
+              value={formData.nombre}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-200 rounded focus:outline-none focus:border-gray-400"
+              required
+            />
+            
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-200 rounded focus:outline-none focus:border-gray-400"
+              required
+            />
 
-            <div>
-              <label className="block text-sm mb-1 text-black" htmlFor="message">
-                Mensaje
-              </label>
-              <textarea
-                id="message"
-                rows="4"
-                className="w-full px-4 py-2 rounded-lg bg-flor-2 border border-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-flor-3"
-                placeholder="Escribe tu mensaje aquí..."
-              />
-            </div>
+            <input
+              type="tel"
+              placeholder="Phone"
+              name="telefono"
+              value={formData.telefono}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-200 rounded focus:outline-none focus:border-gray-400"
+            />
+
+            <textarea
+              placeholder="Write something..."
+              name="mensaje"
+              value={formData.mensaje}
+              onChange={handleChange}
+              rows="4"
+              className="w-full p-3 border border-gray-200 rounded focus:outline-none focus:border-gray-400"
+              required
+            ></textarea>
 
             <button
               type="submit"
-              className="w-full bg-white text-black font-semibold py-2 rounded-lg hover:bg-gray-200 transition"
+              className="w-full bg-[#FF4F4F] text-white py-3 rounded hover:bg-[#ff3535] transition-colors"
             >
-              Enviar mensaje
+              SEND MESSAGE
             </button>
           </form>
         </div>
