@@ -1,4 +1,3 @@
-
 import "./App.css";
 import MainLayout from "@/layout/MainLayout";
 import { Routes, Route } from "react-router-dom";
@@ -14,6 +13,7 @@ import Login from "@/pages/admin/Login";
 import Products from "@/pages/admin/Products";
 import ProtectedRoute from "@/service/ProtectedRoute";
 import AdminLayout from "@/layout/AdminLayout";
+import Dashboard from "@/pages/admin/Dashboard";
 
 function App() {
   return (
@@ -29,7 +29,8 @@ function App() {
       <Route path="/login" element={<Login />} />
 
       <Route path="/admin" element={<AdminLayout />}>
-        <Route path="productos" element={<Products />} />{" "}
+        <Route index element={<Dashboard />} /> {/* Añade esta línea */}
+        <Route path="productos" element={<Products />} />
       </Route>
     </Routes>
   );
