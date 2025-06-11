@@ -14,6 +14,7 @@ import Products from "@/pages/admin/Products";
 import ProtectedRoute from "@/service/ProtectedRoute";
 import AdminLayout from "@/layout/AdminLayout";
 import Dashboard from "@/pages/admin/Dashboard";
+import Users from "@/pages/admin/Users";
 
 function App() {
   return (
@@ -29,8 +30,9 @@ function App() {
       <Route path="/login" element={<Login />} />
 
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<Dashboard />} /> {/* Añade esta línea */}
+        <Route index element={<Dashboard />} />
         <Route path="productos" element={<Products />} />
+        <Route path="usuarios" element={<Users />} />
       </Route>
     </Routes>
   );
