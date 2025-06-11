@@ -1,6 +1,19 @@
 import React from 'react';
 import { UserButton, SignInButton } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom';
+
 function NavbarIcons({ icons, isSignedIn, onIconClick }) {
+  const navigate = useNavigate();
+
+  const handleIconClick = (icon) => {
+    if (icon.name === 'search') {
+      navigate('/catalogo');
+    } else {
+      icon.action?.();
+    }
+    onIconClick?.();
+  };
+
   return (
     <>
       {icons.map((icon, index) => {
@@ -19,10 +32,7 @@ function NavbarIcons({ icons, isSignedIn, onIconClick }) {
         return (
           <button
             key={index}
-            onClick={() => {
-              icon.action?.();
-              onIconClick?.();
-            }}
+            onClick={() => handleIconClick(icon)}
             className="icon-link"
           >
             <img src={icon.icon} alt={icon.name} className="icon" />
@@ -32,4 +42,5 @@ function NavbarIcons({ icons, isSignedIn, onIconClick }) {
     </>
   );
 }
+
 export default NavbarIcons;
