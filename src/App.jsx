@@ -15,6 +15,7 @@ import ProtectedRoute from "@/service/ProtectedRoute";
 import AdminLayout from "@/layout/AdminLayout";
 import Dashboard from "@/pages/admin/Dashboard";
 import Users from "@/pages/admin/Users";
+import Incomes from "./pages/admin/Incomes";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route index element={<Dashboard />} />
         <Route path="productos" element={<Products />} />
         <Route path="usuarios" element={<Users />} />
+        <Route path="ingresos" element={<Incomes />} />
       </Route>
     </Routes>
   );
