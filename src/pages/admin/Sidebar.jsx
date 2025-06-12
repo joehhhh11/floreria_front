@@ -54,6 +54,20 @@ const Sidebar = () => {
           <UsersIcon className="h-5 w-5" />
           Usuarios
         </NavLink>
+
+        <NavLink
+          to="/admin/ingresos"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-4 py-2 rounded-lg transition ${
+              isActive
+                ? "bg-white text-gray-800 font-semibold"
+                : "hover:bg-gray-700"
+            }`
+          }
+        >
+          <DollarSignIcon className="h-5 w-5" />
+          Ingresos
+        </NavLink>
       </nav>
     </aside>
   );
