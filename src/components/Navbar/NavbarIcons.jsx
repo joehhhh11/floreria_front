@@ -6,6 +6,13 @@ import { useNavigate } from 'react-router-dom';
 function NavbarIcons({ icons, isSignedIn, onIconClick }) {
   const { user, isLoaded } = useUser();
   const navigate = useNavigate();
+  
+ const handleIconClick = (icon) => {
+    if (icon.name === 'search') {
+      navigate('/catalogo');
+    } else {
+      icon.action?.();
+    }}
 
   useEffect(() => {
     if (!isLoaded) return;
