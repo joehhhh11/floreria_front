@@ -16,7 +16,8 @@ import AdminLayout from "@/layout/AdminLayout";
 import Dashboard from "@/pages/admin/Dashboard";
 import Users from "@/pages/admin/Users";
 import Incomes from "./pages/admin/Incomes";
-
+import CompleteProfile from "./pages/public/CompleteProfile";
+import AuthRedirect from "./service/AuthRedirect";
 function App() {
   return (
     <Routes>
@@ -27,6 +28,8 @@ function App() {
         <Route path="/producto/:id" element={<ProductDetail />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/carrito" element={<Cart />} />
+        <Route path="/complete-profile" element={<CompleteProfile />} />
+        <Route path="/auth-redirect" element={<AuthRedirect />} />
       </Route>
       <Route path="/login" element={<Login />} />
 

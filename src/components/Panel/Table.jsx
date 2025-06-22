@@ -74,8 +74,6 @@ const Table = ({ columns, data }) => {
           )}
         </tbody>
       </table>
-
-      {/* Paginación */}
       <div className="py-2 flex items-center justify-between">
         <button
           onClick={() => table.previousPage()}

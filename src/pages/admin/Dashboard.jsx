@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import { TrendingUp, TrendingDown, DollarSign, Package, Users, Eye, Calendar, Download, Filter } from 'lucide-react';
 
-// Datos de ventas mensuales
 const salesData = [
   { month: "Ene", ventas: 3500, pedidos: 145 },
   { month: "Feb", ventas: 4200, pedidos: 167 },
@@ -18,7 +17,6 @@ const salesData = [
   { month: "Dic", ventas: 7200, pedidos: 250 }
 ];
 
-// Datos existentes actualizados con colores
 const bestSellers = [
   { id: 1, product: "Ramo de rosas", sales: 458, profit: 16030, growth: 12.5, color: "#ef4444" },
   { id: 2, product: "Orquídeas", sales: 385, profit: 19250, growth: 8.7, color: "#8b5cf6" },
@@ -34,7 +32,6 @@ const categoryData = [
   { name: 'Otros', value: 5, color: '#6b7280' }
 ];
 
-// Componente StatCard
 const StatCard = ({ title, value, change, icon: Icon, trend }) => (
   <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between">
     <div>
