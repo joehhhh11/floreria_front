@@ -1,28 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@/components/Panel/Table";
-
-const mockProducts = [
-  { id: 1, name: "Ramo de rosas", price: 35 },
-  { id: 2, name: "Lirios blancos", price: 45 },
-  { id: 3, name: "Tulipanes", price: 40 },
-  { id: 4, name: "Margaritas", price: 30 },
-  { id: 5, name: "Girasoles", price: 25 },
-  { id: 6, name: "Orquídeas", price: 50 },
-  { id: 7, name: "Claveles", price: 20 },
-  // ... más productos
-];
+import { fetchProducts } from "@/service/productsApi";
 
 const Products = () => {
-  // Define las columnas para la tabla
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchProducts()
+      .then(setProducts)
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
   const columns = [
-    {
-      accessorKey: "name",
-      header: "Nombre",
-    },
-    {
-      accessorKey: "price",
-      header: "Precio ($)",
-    },
+    { accessorKey: "name", header: "Nombre" },
+    { accessorKey: "price", header: "Precio ($)" },
     {
       id: "actions",
       header: "Acciones",
@@ -37,10 +31,13 @@ const Products = () => {
     },
   ];
 
+  if (loading) return <div className="p-6">Cargando productos...</div>;
+  if (error) return <div className="p-6 text-red-600">Error: {error}</div>;
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Productos</h1>
-      <Table columns={columns} data={mockProducts} />
+      <Table columns={columns} data={products} />
     </div>
   );
 };

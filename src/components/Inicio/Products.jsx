@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import products from "@/service/productos.json";
 import Button from "@/components/Button";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { fetchProducts } from "@/api/productsApi";
 
 function Products() {
   const categories = [...new Set(products.map((p) => p.category))];
