@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 const CompleteProfile = () => {
   const { getToken } = useAuth();
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     dni: "",
@@ -18,29 +19,58 @@ const CompleteProfile = () => {
       [e.target.name]: e.target.value
     }));
   };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  console.log("Formulario enviado");
+  
+  const token = await getToken({ template: "backend" });
+  console.log("Token obtenido:", token);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = await getToken({ template: "backend" }); 
+  try {
+    const payload = {
+      nombre: user.firstName || "",
+      apellidos: user.lastName || "",
+      correo: user.primaryEmailAddress?.emailAddress || "",
+      username: user.username || user.firstName,
+      telefono: formData.telefono,
+      dni: formData.dni,
+    };
 
-    try {
-      await axios.post("http://localhost:8080/api/usuarios", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+    console.log("Payload a enviar:", payload);
 
-    await user.update({
-      publicMetadata: {
-        profileCompleted: true
-      }
-    });
-      alert("Perfil completado correctamente");
-    } catch (err) {
-      console.error(err);
-      alert("Error al guardar los datos");
+    const response = await axios.post("http://localhost:8080/api/auth/register/clerk", payload);
+    console.log("Respuesta del backend:", response.data);
+
+    if (!isLoaded || !user) {
+      console.warn("User no está listo:", { isLoaded, user });
+      return <div>Cargando...</div>;
     }
-  };
+
+    console.log("Intentando actualizar metadatos…");
+
+await user.update({
+  unsafeMetadata: {
+    profileCompleted: true,
+    telefono: formData.telefono,
+    dni: formData.dni,
+  },
+});
+
+
+    console.log("Metadatos actualizados correctamente");
+
+    await user.reload();
+    console.log("Usuario recargado");
+
+    navigate("/");
+    alert("Perfil completado correctamente");
+  } catch (err) {
+    console.error("ERROR EN SUBMIT:", err?.response?.data || err.message || err);
+    alert("Error al guardar los datos");
+  }
+};
+
+  if (!isLoaded || !user) return <div>Cargando...</div>;
 
   return (
     <div style={{ maxWidth: "500px", margin: "50px auto" }}>

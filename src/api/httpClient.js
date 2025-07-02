@@ -10,6 +10,7 @@ httpClient.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+    console.log("Token usado:", token);
   }
   return config;
 });

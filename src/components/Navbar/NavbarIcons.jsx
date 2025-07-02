@@ -2,35 +2,43 @@ import React, { useEffect } from 'react';
 import { UserButton, SignInButton, useUser } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 
-
-function NavbarIcons({ icons, isSignedIn, onIconClick }) {
-  const { user, isLoaded } = useUser();
+function NavbarIcons({ icons, isSignedIn: isSignedInProp, onIconClick }) {
+  const { user, isSignedIn, isLoaded } = useUser();
   const navigate = useNavigate();
-  
- const handleIconClick = (icon) => {
+
+  const handleIconClick = (icon) => {
     if (icon.name === 'search') {
       navigate('/catalogo');
     } else {
       icon.action?.();
-    }}
+    }
+  };
 
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded || !user) return;
 
-    const alreadyCompleted = user?.publicMetadata?.completedProfile;
-    if (alreadyCompleted) {
-      navigate("/"); // o donde quieras redirigir si ya completó
-    }
-  }, [user, isLoaded]);
+    const completed = user.unsafeMetadata?.profileCompleted;
+
+    const checkOrSetProfileMetadata = async () => {
+      // Si nunca se definió, inicialízalo como falso
+
+      // Si el perfil no está completo, redirige
+      if (!completed) {
+        navigate('/complete-profile');
+      }
+    };
+
+    checkOrSetProfileMetadata();
+  }, [user, isLoaded, navigate]);
 
   return (
     <>
       {icons.map((icon, index) => {
         if (icon.isUser) {
-          return isSignedIn ? (
+          return isSignedInProp ? (
             <UserButton key={index} afterSignOutUrl="/" />
           ) : (
-            <SignInButton redirectUrl="/complete-profile" key={index} mode="modal" asChild>
+            <SignInButton key={index} mode="modal">
               <button className="icon-link" onClick={onIconClick}>
                 <img src={icon.icon} alt={icon.name} className="icon" />
               </button>

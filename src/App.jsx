@@ -18,8 +18,13 @@ import Users from "@/pages/admin/Users";
 import Incomes from "./pages/admin/Incomes";
 import CompleteProfile from "./pages/public/CompleteProfile";
 import AuthRedirect from "./service/AuthRedirect";
+import RedirectOnSignIn from "./pages/public/RedirectOnSignIn";
 function App() {
   return (
+    <>
+      <RedirectOnSignIn />
+
+    
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<Inicio />} />
@@ -40,6 +45,7 @@ function App() {
         <Route path="ingresos" element={<Incomes />} />
       </Route>
     </Routes>
+    </>
   );
 }
 
