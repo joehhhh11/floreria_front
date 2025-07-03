@@ -1,12 +1,30 @@
-import { useMemo } from "react";
-import { getAllProducts } from "@/service/productService";
+import { useEffect, useMemo, useState } from "react";
+import productService from "@/service/productService";
 
 export const useRelatedProducts = (currentProductId, category) => {
-  const allProducts = getAllProducts();
+  const [allProducts, setAllProducts] = useState([]);
 
-  return useMemo(() => {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await productService.getAllProducts();
+        setAllProducts(data);
+      } catch (err) {
+        console.error("Error fetching products", err);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const related = useMemo(() => {
+    if (!category) return [];
     return allProducts
-      .filter(p => p.category === category && String(p.id) !== String(currentProductId))
-      .slice(0, 4); // puedes ajustar el número que quieras mostrar
-  }, [currentProductId, category]);
+      .filter(
+        (p) => p.categoria?.nombre === category && String(p.id) !== String(currentProductId)
+      )
+      .slice(0, 4);
+  }, [allProducts, currentProductId, category]);
+
+  return related;
 };

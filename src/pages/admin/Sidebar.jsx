@@ -67,6 +67,18 @@ const Sidebar = () => {
         >
           Ingresos
         </NavLink>
+        <NavLink
+          to="/admin/pedidos"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-4 py-2 rounded-lg transition ${
+              isActive
+                ? "bg-white text-gray-800 font-semibold"
+                : "hover:bg-gray-700"
+            }`
+          }
+        >
+          Pedidos
+        </NavLink>
       </nav>
     </aside>
   );

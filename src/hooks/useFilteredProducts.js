@@ -3,21 +3,23 @@ import { useMemo } from 'react'
 export function useFilteredProducts(products, filters) {
   const { category, priceOrder, ratingOrder, currentPage = 1, perPage = 8 } = filters
 
-  const filtered = useMemo(() => {
-    let result = category ? products.filter(p => p.category === category) : [...products]
+const filtered = useMemo(() => {
+  if (!Array.isArray(products)) return [];
 
-    result.sort((a, b) => {
-      if (ratingOrder === 'asc') return a.rating - b.rating
-      if (ratingOrder === 'desc') return b.rating - a.rating
+  let result = category
+  ? products.filter(p => p.categoria?.id === Number(category))
+  : [...products];
 
-      if (priceOrder === 'asc') return a.price - b.price
-      if (priceOrder === 'desc') return b.price - a.price
+  result.sort((a, b) => {
+    if (ratingOrder === 'asc') return a.rating - b.rating;
+    if (ratingOrder === 'desc') return b.rating - a.rating;
+    if (priceOrder === 'asc') return a.price - b.price;
+    if (priceOrder === 'desc') return b.price - a.price;
+    return 0;
+  });
 
-      return 0
-    })
-
-    return result
-  }, [products, category, priceOrder, ratingOrder])
+  return result;
+}, [products, category, priceOrder, ratingOrder]);
 
   const totalPages = Math.ceil(filtered.length / perPage)
 

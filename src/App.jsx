@@ -19,6 +19,7 @@ import Incomes from "./pages/admin/Incomes";
 import CompleteProfile from "./pages/public/CompleteProfile";
 import AuthRedirect from "./service/AuthRedirect";
 import RedirectOnSignIn from "./pages/public/RedirectOnSignIn";
+import Orders from "./pages/admin/Orders";
 function App() {
   return (
     <>
@@ -43,6 +44,7 @@ function App() {
         <Route path="productos" element={<Products />} />
         <Route path="usuarios" element={<Users />} />
         <Route path="ingresos" element={<Incomes />} />
+        <Route path="pedidos" element={<Orders />} />
       </Route>
     </Routes>
     </>

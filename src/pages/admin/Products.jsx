@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from "react";
 import Table from "@/components/Panel/Table";
-import { fetchProducts } from "@/service/productsApi";
-
+import productService from "@/service/productService";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   useEffect(() => {
-    fetchProducts()
-      .then(setProducts)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+    const fetchData = async () => {
+      try {
+        const data = await productService.getAllProducts();
+        setProducts(data);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, []);
+
+
 
   const columns = [
     { accessorKey: "name", header: "Nombre" },
-    { accessorKey: "price", header: "Precio ($)" },
+    { accessorKey: "description", header: "Descripción" },
+    { accessorKey: "destacado", header: "Destacado" },
+    { accessorKey: "stock", header: "Stock" },
+    { accessorKey: "categoria.nombre", header: "Categoria" },
     {
       id: "actions",
       header: "Acciones",

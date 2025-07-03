@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const cart = useCartStore((state) => state.cart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
   return (
     <>
       <div className="flex mx-auto md:flex-row flex-col w-[70vw] mt-10 ">
@@ -18,7 +19,7 @@ const Cart = () => {
                 <div key={item.product.id}   className="mb-4 border-b pb-4 border-flor flex md:flex-row flex-col">
                   <div>
                     <img
-                      src={item.product.images[0]}
+                      src={BASE_URL + item.product.imageUrls[0]}
                       alt={item.product.name}
                       className="w-56 h-56 object-cover bg-black"
                     />

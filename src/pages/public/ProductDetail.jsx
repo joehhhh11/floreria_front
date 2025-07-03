@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { ShoppingCartIcon, TruckIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/Button";
-import React, { useState , useRef } from "react";
+import React, { useState , useRef, useEffect } from "react";
 
 import ProductGallery from "@/components/Catalogo/ProductGallery";
 import { useProductById } from "@/hooks/useProductById";
@@ -13,7 +13,7 @@ import RelatedProducts from "@/components/Catalogo/RelatedProducts";
 const ProductDetail = () => {
   const { id } = useParams();
   const product = useProductById(id);
-  const related = useRelatedProducts(id, product.category);
+  const related = useRelatedProducts(id, product?.category);
 
   const [message, setMessage] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -30,11 +30,11 @@ const ProductDetail = () => {
       alert("Producto añadido al carrito");
     }
   };
+console.log('ProductDetail product:', product);
   return (
     <div>
       <div className="p-6 md:w-[70vw] mx-auto flex md:flex-row flex-col">
-        <ProductGallery images={product.images} />
-
+        <ProductGallery images={product.imageUrls} />
         <div>
           <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
           <p className="text-xl text-gray-700 font-semibold mb-4">

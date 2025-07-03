@@ -1,18 +1,34 @@
-import React, { useState } from "react";
-import { getAllProducts } from "@/service/productService";
+import React, { useState, useEffect } from "react";
+import productService from "@/service/productService";
 import { useFilteredProducts } from "@/hooks/useFilteredProducts";
 import ProductCard from "@/components/Catalogo/ProductCard";
 import FilterPanel from "@/components/Catalogo/FilterPanel";
 import Pagination from "@/components/Catalogo/Pagination";
 
-const products = getAllProducts();
-
 const Catalogo = () => {
+  const [products, setProducts] = useState([]);
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const [sortBy, setSortBy] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const perPage = 8;
+  useEffect(() => {
+  productService.getAllCategories().then(setCategories).catch(console.error);
+}, []);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = category
+          ? await productService.getCategoryProducts(category)
+          : await productService.getAllProducts();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error al cargar productos:", error);
+      }
+    };
 
+    fetchProducts();
+  }, [category]);
   const { paginated, totalPages } = useFilteredProducts(products, {
     category,
     priceOrder:
@@ -31,6 +47,7 @@ const Catalogo = () => {
     <div className="p-6 md:w-[70vw] mx-auto">
       <FilterPanel
         category={category}
+        categories={categories}
         setCategory={setCategory}
         sortBy={sortBy}
         setSortBy={setSortBy}
@@ -38,7 +55,11 @@ const Catalogo = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 my-8">
         {(paginated || []).map((product, index) => (
-          <ProductCard key={product.id} product={product} isFeatured={index === 4} />
+          <ProductCard
+            key={product.id}
+            product={product}
+            isFeatured={index === 4}
+          />
         ))}
       </div>
 

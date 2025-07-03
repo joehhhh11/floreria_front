@@ -1,12 +1,11 @@
-const FilterPanel = ({ category, setCategory, sortBy, setSortBy }) => {
+const FilterPanel = ({ category, setCategory, sortBy, setSortBy, categories }) => {
   return (
     <div className="flex flex-wrap gap-4">
       <select onChange={(e) => setCategory(e.target.value)} value={category || ''}>
         <option value="">Todas las categorías</option>
-        <option value="Ramos">Ramos</option>
-        <option value="Plantas">Plantas</option>
-        <option value="Accesorios">Accesorios</option>
-        <option value="Plantas de Exterior">Plantas del exterior</option>
+        {categories.map((c) => (
+          <option key={c.id} value={c.id}>{c.nombre}</option>
+        ))}
       </select>
 
       <select onChange={(e) => setSortBy(e.target.value)} value={sortBy || ''}>
