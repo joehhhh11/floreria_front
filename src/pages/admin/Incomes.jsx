@@ -1,62 +1,30 @@
 import React from "react";
 import Table from "@/components/Panel/Table";
+import orderService from "@/service/orderService";
 
-const mockIncomes = [
-  {
-    id: 1,
-    customer: "María González",
-    amount: 120.0,
-    date: "2025-06-10",
-    method: "Tarjeta",
-  },
-  {
-    id: 2,
-    customer: "Juan Pérez",
-    amount: 85.5,
-    date: "2025-06-11",
-    method: "Efectivo",
-  },
-  {
-    id: 3,
-    customer: "Ana Martínez",
-    amount: 99.99,
-    date: "2025-06-09",
-    method: "PayPal",
-  },
-  {
-    id: 4,
-    customer: "Carlos López",
-    amount: 45.75,
-    date: "2025-06-12",
-    method: "Transferencia",
-  },
-  {
-    id: 5,
-    customer: "Laura Torres",
-    amount: 200.0,
-    date: "2025-06-08",
-    method: "Tarjeta",
-  },
-];
+function Incomes() {
+  const [incomes, setIncomes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error,   setError]   = useState(null);
 
-const Incomes = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const orders = await orderService.getAllOrders();
+        setIncomes(orders.map(mapOrderToIncome));   // ⬅️ transformamos aquí
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
   const columns = [
-    {
-      accessorKey: "customer",
-      header: "Cliente",
-    },
-    {
-      accessorKey: "amount",
-      header: "Monto ($)",
-    },
-    {
-      accessorKey: "date",
-      header: "Fecha",
-    },
-    {
-      accessorKey: "method",
-      header: "Método de Pago",
-    },
+    { accessorKey: "customer", header: "Cliente" },
+    { accessorKey: "amount",   header: "Monto ($)" },
+    { accessorKey: "date",     header: "Fecha" },
+    { accessorKey: "method",   header: "Método de Pago" },
     {
       id: "actions",
       header: "Acciones",
@@ -70,12 +38,17 @@ const Incomes = () => {
       ),
     },
   ];
+  if (loading) return <p className="p-6">Cargando ingresos…</p>;
+  if (error)   return <p className="p-6 text-red-600">Error: {error.message}</p>;
+
+  const total = incomes.reduce((s, i) => s + (Number(i.amount) || 0), 0);
 
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Ingresos</h1>
-        <button className="bg-green-600 text-white px-4 py-2 rounded">
+        <button onClick={() => window.print()}
+                className="bg-green-600 text-white px-4 py-2 rounded">
           Imprimir reporte
         </button>
       </div>
@@ -85,21 +58,27 @@ const Incomes = () => {
         <div className="bg-white p-4 rounded-lg shadow">
           <h2 className="text-lg font-semibold mb-2">Total Ingresos</h2>
           <p className="text-3xl font-bold">
-            ${mockIncomes.reduce((acc, income) => acc + income.amount, 0).toFixed(2)}
+            ${total.toFixed(2)}
           </p>
         </div>
         <div className="bg-white p-4 rounded-lg shadow">
           <h2 className="text-lg font-semibold mb-2">Transacciones</h2>
-          <p className="text-3xl font-bold">{mockIncomes.length}</p>
+          <p className="text-3xl font-bold">{incomes.length}</p>
         </div>
       </div>
 
       {/* Tabla de ingresos */}
       <div className="bg-white p-4 rounded-lg shadow">
-        <Table columns={columns} data={mockIncomes} />
+        <Table columns={columns} data={incomes} />
       </div>
     </div>
   );
 };
-
+const mapOrderToIncome = (o) => ({
+  id:       o.id,
+  customer: `${o.user?.nombre ?? ""} ${o.user?.apellido ?? ""}`.trim(),
+  amount:   o.totalFinal,
+  date:     o.fechaCreacion.slice(0, 10),
+  method:   o.tipoPago ?? "—",
+});
 export default Incomes;
