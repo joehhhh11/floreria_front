@@ -1,36 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import { TrendingUp, TrendingDown, DollarSign, Package, Users, Eye, Calendar, Download, Filter } from 'lucide-react';
-
-const salesData = [
-  { month: "Ene", ventas: 3500, pedidos: 145 },
-  { month: "Feb", ventas: 4200, pedidos: 167 },
-  { month: "Mar", ventas: 3800, pedidos: 156 },
-  { month: "Abr", ventas: 5100, pedidos: 198 },
-  { month: "May", ventas: 4600, pedidos: 175 },
-  { month: "Jun", ventas: 6200, pedidos: 210 },
-  { month: "Jul", ventas: 5400, pedidos: 190 },
-  { month: "Ago", ventas: 4800, pedidos: 180 },
-  { month: "Sep", ventas: 6500, pedidos: 220 },
-  { month: "Oct", ventas: 5800, pedidos: 205 },
-  { month: "Nov", ventas: 6100, pedidos: 215 },
-  { month: "Dic", ventas: 7200, pedidos: 250 }
-];
-
-const bestSellers = [
-  { id: 1, product: "Ramo de rosas", sales: 458, profit: 16030, growth: 12.5, color: "#ef4444" },
-  { id: 2, product: "Orquídeas", sales: 385, profit: 19250, growth: 8.7, color: "#8b5cf6" },
-  { id: 3, product: "Girasoles", sales: 342, profit: 8550, growth: -2.1, color: "#f59e0b" },
-  { id: 4, product: "Lirios blancos", sales: 298, profit: 13410, growth: 15.3, color: "#10b981" }
-];
-
-const categoryData = [
-  { name: 'Rosas', value: 35, color: '#ef4444' },
-  { name: 'Orquídeas', value: 25, color: '#8b5cf6' },
-  { name: 'Girasoles', value: 20, color: '#f59e0b' },
-  { name: 'Lirios', value: 15, color: '#10b981' },
-  { name: 'Otros', value: 5, color: '#6b7280' }
-];
 
 const StatCard = ({ title, value, change, icon: Icon, trend }) => (
   <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between">
@@ -45,8 +15,33 @@ const StatCard = ({ title, value, change, icon: Icon, trend }) => (
 );
 
 const Dashboard = () => {
-  const [timeRange, setTimeRange] = useState('12m');
-  const [chartType, setChartType] = useState('line');
+  const [salesData, setSalesData] = useState([]);
+  const [bestSellers, setBestSellers] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [salesRes, bestRes, catRes] = await Promise.all([
+          fetch('/api/dashboard/monthly-sales'),
+          fetch('/api/dashboard/best-sellers'),
+          fetch('/api/dashboard/category-distribution'),
+        ]);
+        const sales = await salesRes.json();
+        const best = await bestRes.json();
+        const cat = await catRes.json();
+        setSalesData(sales);
+        setBestSellers(best);
+        setCategoryData(cat);
+      } catch (error) {
+        console.error('Error al cargar datos del dashboard:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('es-PE', {
@@ -54,6 +49,10 @@ const Dashboard = () => {
       currency: 'PEN'
     }).format(value);
   };
+
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Cargando dashboard...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
@@ -83,14 +82,14 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
           title="Ventas Totales"
-          value={formatCurrency(65280)}
+          value={formatCurrency(salesData.reduce((acc, item) => acc + (item.ventas || 0), 0))}
           change="+12.5%"
           icon={DollarSign}
           trend="up"
         />
         <StatCard
           title="Productos Vendidos"
-          value="2,483"
+          value={salesData.reduce((acc, item) => acc + (item.pedidos || 0), 0)}
           change="+8.2%"
           icon={Package}
           trend="up"
