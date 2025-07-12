@@ -1,8 +1,22 @@
-import { Navigate } from "react-router-dom";
+// service/ProtectedRoute.jsx
+import { Navigate, Outlet } from "react-router-dom";
+import { jwtDecode } from "jwt-decode"; // ✅ Import nombrado
+import useAuthStore from "@/store/authStore";
 
-const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem("fake-token");
-  return token ? children : <Navigate to="/login" />;
-};
+export default function ProtectedRoute({ role, children }) {
+  const token = useAuthStore((state) => state.token);
 
-export default ProtectedRoute;
+  if (!token) return <Navigate to="/login" replace />;
+
+  try {
+    const decoded = jwtDecode(token); // ✅ Uso corregido
+    if (role && decoded.role !== role) {
+      return <Navigate to="/" replace />;
+    }
+  } catch (e) {
+    console.error("Token inválido:", e);
+    return <Navigate to="/login" replace />;
+  }
+
+  return children || <Outlet />;
+}

@@ -1,8 +1,6 @@
-//npm install --save-dev jest
-//npm test
+
 const { fetchProducts } = require('./productApi.js');
 
-// Mock global fetch
 global.fetch = jest.fn(() =>
   Promise.resolve({
     ok: true,

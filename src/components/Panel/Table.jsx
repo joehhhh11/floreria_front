@@ -1,29 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import {
   useReactTable,
   getCoreRowModel,
   getPaginationRowModel,
+  getFilteredRowModel,
   flexRender,
 } from "@tanstack/react-table";
 
 const Table = ({ columns, data }) => {
-  const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 5,
-  });
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
+  const [globalFilter, setGlobalFilter] = useState("");
 
   const table = useReactTable({
     data,
     columns,
-    state: { pagination },
+    state: { pagination, globalFilter },
     onPaginationChange: setPagination,
+    onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    manualPagination: false,
+    getFilteredRowModel: getFilteredRowModel(),
+    globalFilterFn: (row, columnId, filterValue) =>
+      String(row.getValue(columnId))
+        .toLowerCase()
+        .includes(filterValue.toLowerCase()),
   });
 
   return (
     <div className="overflow-x-auto">
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Buscar..."
+          value={globalFilter}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          className="border px-3 py-2 rounded w-full md:w-1/3"
+        />
+      </div>
       <table className="min-w-full border border-gray-300">
         <thead className="bg-gray-100">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -33,18 +46,12 @@ const Table = ({ columns, data }) => {
                   key={header.id}
                   className="text-left p-3 border-b border-gray-300"
                 >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                  {flexRender(header.column.columnDef.header, header.getContext())}
                 </th>
               ))}
             </tr>
           ))}
         </thead>
-
         <tbody>
           {table.getRowModel().rows.length === 0 ? (
             <tr>
@@ -57,10 +64,7 @@ const Table = ({ columns, data }) => {
             </tr>
           ) : (
             table.getRowModel().rows.map((row) => (
-              <tr
-                key={row.id}
-                className="hover:bg-gray-50 bg-white "
-              >
+              <tr key={row.id} className="hover:bg-gray-50 bg-white">
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}

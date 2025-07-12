@@ -9,6 +9,7 @@ import { useProductById } from "@/hooks/useProductById";
 import { useCartStore } from "@/store/cartStore";
 import { useRelatedProducts } from "@/hooks/useRelatedProducts";
 import RelatedProducts from "@/components/Catalogo/RelatedProducts";
+import Reviews from "./Reviews";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -82,6 +83,7 @@ console.log('ProductDetail product:', product);
         </div>
       </div>
       <RelatedProducts products={related} />
+      <Reviews/>
     </div>
   );
 };
