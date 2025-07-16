@@ -1,8 +1,6 @@
-# Documentación del Frontend
+# 🎯 Frontend - Sistema de Gestión de Incidencias UTP SJL
 
-##  Introducción
-
-Este módulo corresponde al **frontend** del sistema web desarrollado con **React.js**. Se encarga de la interfaz gráfica y la interacción del usuario con el sistema. Está estructurado siguiendo el patrón **MVC**, los principios **SOLID** y la implementación del patrón **DAO** para el manejo de servicios.
+Este es el frontend del sistema de gestión de incidencias de la sede **UTP San Juan de Lurigancho**, desarrollado con React y Vite. Consume las APIs del backend (Spring Boot) para gestionar autenticación, usuarios y registros de incidencias.
 
 ---
 
@@ -19,31 +17,164 @@ Este módulo corresponde al **frontend** del sistema web desarrollado con **Reac
 
 ---
 
-##  Estructura del Proyecto
+## 📥 Requisitos Previos
 
-```plaintext
-src/
-├── assets/        → Imágenes, íconos, estilos globales
-├── components/    → Componentes reutilizables (botones, tablas, etc.)
-├── hooks/         → Hooks personalizados para lógica compartida
-├── layout/        → Componentes de diseño general (Sidebar, Header)
-├── pages/         → Páginas principales del sistema (vistas)
-├── service/       → Acceso a datos (DAO)
-├── store/         → Manejo de estado global (Zustand o Redux)
-├── App.jsx        → Componente principal y definición de rutas
-├── main.jsx       → Punto de entrada de React
+- Node.js >= 18  
+  👉 [Descargar Node.js](https://nodejs.org/en/download)
+
+Verifica instalación:
+
+```bash
+node -v
+npm -v
 ```
 
-# React + Vite
+---
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## ⚙️ Instalación del Proyecto
 
-Currently, two official plugins are available:
+1. Clonar el repositorio:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+git clone https://github.com/tuusuario/incidencias-utp-frontend.git
+cd incidencias-utp-frontend
+```
 
-## Expanding the ESLint configuration
+2. Instalar dependencias:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-"# floreria_front" 
+```bash
+npm install
+```
+
+3. Ejecutar en entorno local:
+
+```bash
+npm run dev
+```
+
+---
+
+## 🌐 Configuración del entorno (`.env`)
+
+Crea un archivo `.env` en la raíz del proyecto con lo siguiente:
+
+```env
+VITE_API_URL=http://localhost:8080/api
+```
+
+Asegúrate de que `VITE_API_URL` apunte a la URL donde se está ejecutando el backend.
+
+---
+
+## 📁 Estructura del Proyecto (Frontend)
+
+```
+src/
+├── assets/           # Imágenes y recursos
+├── components/       # Componentes reutilizables
+├── pages/            # Vistas por ruta
+├── store/            # Estado global con Zustand
+├── services/         # Llamadas API con Axios
+├── App.jsx
+└── main.jsx
+```
+
+---
+
+## 🌐 Comunicación con el Backend (Axios)
+
+En `services/api.js` se configura Axios:
+
+```js
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export default api;
+```
+
+---
+
+## 💾 Manejo de Estado con Zustand
+
+Ejemplo básico de store en `store/userStore.js`:
+
+```js
+import { create } from 'zustand';
+
+export const useUserStore = create((set) => ({
+  user: null,
+  setUser: (user) => set({ user }),
+  logout: () => set({ user: null }),
+}));
+```
+
+---
+
+## 🎨 Estilos con Tailwind
+
+Tailwind está configurado vía `tailwind.config.js`.  
+Ejemplo de uso:
+
+```jsx
+<button className="bg-blue-500 text-white px-4 py-2 rounded">
+  Enviar
+</button>
+```
+
+---
+
+## ✅ Funcionalidades Implementadas
+
+- Inicio de sesión con JWT
+- Registro y listado de incidencias
+- Roles: usuario, técnico, administrador
+- Navegación protegida según autenticación
+- UI responsiva con Tailwind
+
+---
+
+## 📦 Empaquetado para Producción
+
+```bash
+npm run build
+```
+
+Esto generará los archivos listos para producción en la carpeta `dist/`.
+
+Para previsualizar localmente el build:
+
+```bash
+npm run preview
+```
+
+---
+
+## 🧩 Conexión con Backend
+
+Asegúrate de tener el backend corriendo (Spring Boot).  
+Todas las peticiones se envían a:
+
+```
+http://localhost:8080/api/
+```
+
+Endpoints esperados:
+
+- `/auth/login`
+- `/incidencias`
+- `/usuarios`
+- etc.
+
+---
+
