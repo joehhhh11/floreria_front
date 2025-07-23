@@ -38,7 +38,7 @@ const handleSubmit = async (e) => {
 
     console.log("Payload a enviar:", payload);
 
-    const response = await axios.post("http://localhost:8080/api/auth/register/clerk", payload);
+    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register/clerk`, payload);
     console.log("Respuesta del backend:", response.data);
 
     if (!isLoaded || !user) {
