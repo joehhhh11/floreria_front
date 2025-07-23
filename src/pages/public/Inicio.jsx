@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@/components/Button";
+import { Link } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Products from "@/components/Inicio/Products";
 import Categories from "@/components/Inicio/Catalogo";
@@ -18,9 +19,11 @@ function Inicio() {
             florece y los sueños cobran forma. Adéntrese en un mundo de colores
             vibrantes, fragancias cautivadoras y arte que le cautivará.
           </p>
-          <Button className="flex items-center gap-2">
-            Ir catalogo <ArrowRightIcon className="w-5 h-5" />
-          </Button>
+          <Link to="/catalogo">
+            <Button className="flex items-center gap-2">
+              Ir catálogo <ArrowRightIcon className="w-5 h-5" />
+            </Button>
+          </Link>
         </section>
         <div className="w-1/2">
           <img src="img1.png" alt="" className="w-[600px] object-contain" />
