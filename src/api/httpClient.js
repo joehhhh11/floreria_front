@@ -8,7 +8,14 @@ const httpClient = axios.create({
 
 httpClient.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token;
-  if (token) {
+  // Endpoints públicos que NO deben llevar Authorization
+  const publicEndpoints = [
+    '/api/products',
+    '/api/category',
+  ];
+  // Si la URL es pública, no agregues el header Authorization
+  const isPublic = publicEndpoints.some(endpoint => config.url.startsWith(endpoint));
+  if (token && !isPublic) {
     config.headers.Authorization = `Bearer ${token}`;
     console.log("Token usado:", token);
   }
