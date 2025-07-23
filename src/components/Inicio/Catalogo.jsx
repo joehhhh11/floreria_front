@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import products from "@/service/productos.json";
 import Button from "@/components/Button";
+import { Link } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 function Catalogo() {
@@ -32,9 +33,11 @@ function Catalogo() {
           </div>
         ))}
         <div className="flex justify-center mt-10">
-          <Button className="flex items-center gap-2">
-            Ver más <ArrowRightIcon className="w-5 h-5" />
-          </Button>
+          <Link to="/catalogo">
+            <Button className="flex items-center gap-2">
+              Ver más <ArrowRightIcon className="w-5 h-5" />
+            </Button>
+          </Link>
         </div>
       </div>
 
