@@ -21,7 +21,6 @@ function NavbarIcons({ icons, isSignedIn: isSignedInProp, onIconClick }) {
 
     const checkOrSetProfileMetadata = async () => {
       // Si nunca se definió, inicialízalo como falso
-
       // Si el perfil no está completo, redirige
       if (!completed) {
         navigate('/complete-profile');
@@ -50,7 +49,7 @@ function NavbarIcons({ icons, isSignedIn: isSignedInProp, onIconClick }) {
           <button
             key={index}
             onClick={() => handleIconClick(icon)}
-            className="icon-link"
+            className="cursor-pointer hover:scale-110 transition-transform duration-150 ease-in-out"
           >
             <img src={icon.icon} alt={icon.name} className="icon" />
           </button>

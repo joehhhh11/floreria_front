@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { ShoppingCartIcon, TruckIcon } from "@heroicons/react/24/outline";
+import { ShoppingCartIcon, TruckIcon ,XMarkIcon, HeartIcon, ShareIcon, StarIcon, PlusIcon, MinusIcon , InformationCircleIcon, CheckCircleIcon} from "@heroicons/react/24/outline";
 import Button from "@/components/Button";
 import React, { useState , useRef, useEffect } from "react";
 
@@ -14,8 +14,10 @@ import Reviews from "./Reviews";
 const ProductDetail = () => {
   const { id } = useParams();
   const product = useProductById(id);
+  const [showSuccess, setShowSuccess] = useState(false);
   const related = useRelatedProducts(id, product?.category);
-
+  const [isOpenModal , setIsOpenModal] = useState(false);
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
   const [message, setMessage] = useState("");
   const [quantity, setQuantity] = useState(1);
   const addToCart = useCartStore((state) => state.addToCart);
@@ -24,12 +26,24 @@ const ProductDetail = () => {
     return <p className="p-6 text-red-500">Producto no encontrado</p>;
   }
 
+
+
+  const handleCloseModal = () => {
+    setIsOpenModal(false);
+  };
+
   const handleAddToCart = () => {
     const qty = Number(quantity);
     if (qty > 0) {
       addToCart(product, qty, message);
-      alert("Producto añadido al carrito");
     }
+    setShowSuccess(true);
+    setTimeout(() => setShowSuccess(false), 3000);
+
+    setIsOpenModal(false);
+  };
+  const handleOpenModel = () => {
+    setIsOpenModal(true);
   };
 console.log('ProductDetail product:', product);
   return (
@@ -77,13 +91,88 @@ console.log('ProductDetail product:', product);
                 placeholder="Cantidad"
                 className="px-2 py-2 border"
               />
-              <Button onClick={handleAddToCart}>Añadir al carrito</Button>
+              <Button onClick={handleOpenModel}>Añadir al carrito</Button>
             </div>
           </div>
         </div>
       </div>
       <RelatedProducts products={related} />
-      <Reviews/>
+      <Reviews data={product.reviews} productId={product.id}/>
+
+      {isOpenModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-100">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xl font-bold text-gray-900">Confirmar compra</h3>
+                <button
+                  onClick={handleCloseModal}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <XMarkIcon className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-4">
+              <div className="flex gap-4">
+                {product.imageUrls?.[0] && (
+                  <img
+                    src={BASE_URL + product.imageUrls[0]}
+                    alt={product.name}
+                    className="w-16 h-16 object-cover rounded-lg"
+                  />
+                )}
+                <div className="flex-1">
+                  <h4 className="font-semibold text-gray-900">{product.name}</h4>
+                  <p className="text-sm text-gray-500">Cantidad: {quantity}</p>
+                  <p className="font-bold text-blue-600">${(product.price * quantity).toLocaleString()}</p>
+                </div>
+              </div>
+
+              {message && (
+                <div className="bg-gray-50 rounded-lg p-3">
+                  <p className="text-sm text-gray-600">
+                    <span className="font-medium">Mensaje:</span> "{message}"
+                  </p>
+                </div>
+              )}
+
+              <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                <div className="flex items-start gap-2">
+                  <InformationCircleIcon className="w-5 h-5 text-blue-600 mt-0.5" />
+                  <p className="text-sm text-blue-800">
+                    Este producto será añadido a tu carrito. Podrás revisar tu pedido antes de finalizar la compra.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-gray-200 flex gap-3">
+              <button
+                onClick={handleCloseModal}
+                className="flex-1 py-3 px-4 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleAddToCart}
+                className="flex-1 py-3 px-4 bg-gradient-to-r from-flor to-flor text-white rounded-lg font-medium transition-all duration-200 transform hover:scale-[1.02]"
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+            {showSuccess && (
+        <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-slide-in-right">
+          <div className="flex items-center gap-2">
+            <CheckCircleIcon className="w-5 h-5" />
+            <span>¡Producto añadido al carrito!</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

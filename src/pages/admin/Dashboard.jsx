@@ -53,7 +53,6 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  // === Sales data grouped by month ===
   const salesData = orders.reduce((acc, order) => {
     const date = new Date(order.fechaCreacion);
     const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
@@ -68,7 +67,7 @@ const Dashboard = () => {
     return acc;
   }, []).sort((a, b) => a.month.localeCompare(b.month));
 
-  // === Best Sellers ===
+
   const bestSellersMap = {};
   orders.forEach(order => {
     order.detalles?.forEach(item => {
@@ -88,7 +87,7 @@ const Dashboard = () => {
   });
   const bestSellers = Object.values(bestSellersMap).sort((a, b) => b.sales - a.sales).slice(0, 5);
 
-  // === Category Distribution ===
+
   const categoryCount = {};
   products.forEach(prod => {
     const cat = prod.categoria?.nombre || 'Sin categoría';
@@ -142,7 +141,6 @@ const Dashboard = () => {
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        {/* Ventas Mensuales */}
         <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <h2 className="text-lg font-semibold mb-4">Ventas Mensuales</h2>
           <ResponsiveContainer width="100%" height={300}>

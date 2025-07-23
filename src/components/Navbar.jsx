@@ -26,9 +26,9 @@ function Navbar() {
 
   return (
     <>
-      <nav className="bg-flor-2 px-6 py-4 md:px-40 flex items-center justify-between relative">
+      <nav className="bg-flor-2 px-6 py-10 md:px-40 flex items-center justify-between relative ">
         <div className="flex items-center">
-          {isSignedIn && <p className="hidden md:block mr-6">Hola, {user?.firstName}</p>}
+          {isSignedIn && <p className="hidden md:block mr-6">Hola, <span className="font-bold">{user?.firstName}</span></p>}
 
           <div className="hidden md:block">
             <NavbarLinks />

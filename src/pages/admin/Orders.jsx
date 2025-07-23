@@ -32,7 +32,7 @@ function Orders() {
 
     if (mode === "view") {
       try {
-        const products = await getOrderById(order.pedidoId);; // asegúrate que `order._id` exista
+        const products = await getOrderById(order.pedidoId);
         console.log(products.detalles);
         setOrderProducts(products.detalles);
       } catch (error) {

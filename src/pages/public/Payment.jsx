@@ -18,6 +18,7 @@ function Payment() {
         direccionEnvio: `${formData.address}, ${formData.apartment}, ${formData.city}, ${formData.distrito}`,
         tipoEntrega: formData.tipoEntrega,
         cuponId: null,
+        estado: "PENDIENTE",
         productos: cart.map((item) => ({
           productoId: item.product.id,
           cantidad: item.quantity,
@@ -42,7 +43,7 @@ function Payment() {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-[70vw] mx-auto pt-20 pb-20">
       <div>
         <FormPayment onChange={setFormData} />
-        <FormCard />
+        
       </div>
 
       <div className="bg-[#F0F0F0] p-10 h-[50vh]">

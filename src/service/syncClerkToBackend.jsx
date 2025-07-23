@@ -1,4 +1,3 @@
-// src/service/syncClerkToBackend.js
 import httpClient from "@/api/httpClient";
 import useAuthStore from "../store/authStore";
 
@@ -17,10 +16,9 @@ export async function syncClerkToBackend(user) {
       throw new Error("El backend no devolvió un JWT");
     }
 
-    // 🧠 Guardar en Zustand
     const { setToken, setUser } = useAuthStore.getState();
     setToken(res.data.token);
-    setUser(body); // o cualquier dato extra si tu backend lo devuelve
+    setUser(body); 
 
     console.log("✅ Token guardado en Zustand:", res.data.token);
   } catch (err) {
