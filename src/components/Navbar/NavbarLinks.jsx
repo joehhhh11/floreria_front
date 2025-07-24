@@ -7,6 +7,8 @@ function NavbarLinks({ onClick }) {
         { to: "/", label: "Sobre nosotros" },
         { to: "/catalogo", label: "Catálogo" },
         { to: "/contacto", label: "Contacto" },
+
+
       ].map(({ to, label }) => (
         <li key={to}>
           <Link to={to} onClick={onClick} className="block">

@@ -7,7 +7,6 @@ import Categories from "@/components/Inicio/Catalogo";
 function Inicio() {
   return (
     <>
-      {/* bienvenida */}
       <div className="flex w-[80vw] justify-center mx-auto md:flex-row flex-col">
         <section className="md:w-1/2 flex flex-col justify-center items-start  space-y-5">
           <h1 className="text-6xl">

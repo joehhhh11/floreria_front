@@ -12,7 +12,7 @@ import {
   XMarkIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolid, UserIcon } from '@heroicons/react/24/solid';
-
+import orderService from "../../service/orderService";
 function Reviews({ data = [] }) {
   const { id } = useParams();
   const [reviews, setReviews] = useState(data);
@@ -22,6 +22,10 @@ function Reviews({ data = [] }) {
   const [filterBy, setFilterBy] = useState('all');
 
   const { isSignedIn, user } = useUser();
+  const getOrderById = async (id) => {
+    const products = await orderService.getOrderById(id);
+    return products;
+  };
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -39,25 +43,31 @@ function Reviews({ data = [] }) {
     setNewReview((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!newReview.comentario.trim()) return;
+const handleSubmit = async () => {
+  try {
+    const response = await axios.post("/api/reviews", {
+      comentario,
+      puntuacion,
+      productoId: product.id,
+    });
 
-    try {
-      const res = await httpClient.post("/api/reviews", {
-        productoId: Number(id),
-        comentario: newReview.comentario,
-        puntuacion: newReview.puntuacion,
-      });
+    const nuevaReview = {
+      id: Date.now(), 
+      comentario,
+      puntuacion,
+      fechaReview: new Date().toISOString(),
+      usuario: currentUser?.username || "Usuario",
+    };
 
-      setReviews((prev) => [res.data, ...prev]);
-      setNewReview({ puntuacion: 5, comentario: "" });
-      setFormVisible(false);
-    } catch (err) {
-      console.error("Error al enviar reseña:", err);
-      alert("No se pudo enviar la reseña");
-    }
-  };
+    setProduct((prev) => ({
+      ...prev,
+      reviews: [...prev.reviews, nuevaReview],
+    }));
+  } catch (error) {
+    console.error("Error al enviar reseña:", error);
+  }
+};
+
 
   const totalReviews = reviews.length;
   const averageRating = totalReviews > 0 
@@ -119,8 +129,8 @@ function Reviews({ data = [] }) {
     });
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-      <div className="bg-gradient-to-r from-blue-50 to-purple-50 px-8 py-6 border-b">
+    <div className="rounded-2xl shadow-lg overflow-hidden w-[80vw] mx-auto">
+      <div className="bg-gradient-to-r  px-8 py-6 border-b">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Reseñas y valoraciones</h2>
         <p className="text-gray-600">{totalReviews} reseña{totalReviews !== 1 ? "s" : ""}</p>
       </div>
@@ -158,12 +168,12 @@ function Reviews({ data = [] }) {
           </div>
         )}
 
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8 p-4 bg-gray-50 rounded-xl">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8 p-4 bg-flor rounded-xl">
           <div className="flex items-center gap-4">
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-flor-2"
             >
               <option value="recent">Más recientes</option>
               <option value="rating-high">Mejor calificadas</option>
@@ -173,7 +183,7 @@ function Reviews({ data = [] }) {
             <select
               value={filterBy}
               onChange={(e) => setFilterBy(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-flor-2"
             >
               <option value="all">Todas las reseñas</option>
               <option value="5">5 estrellas</option>
@@ -187,7 +197,7 @@ function Reviews({ data = [] }) {
           {isSignedIn && (
             <button
               onClick={() => setFormVisible(!formVisible)}
-              className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-md"
+              className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r bg-flor-2 text-black  rounded-lg hover:bg-flor-2 transition-all duration-200 transform hover:scale-105 shadow-md"
             >
               <PlusIcon className="w-5 h-5" />
               Escribir reseña
@@ -196,7 +206,7 @@ function Reviews({ data = [] }) {
         </div>
 
         {formVisible && (
-          <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-6 mb-8 border-2 border-blue-100 shadow-inner">
+          <div className="bg-gradient-to-br bg-flow-2 rounded-2xl p-6 mb-8 border-2 border-flor shadow-inner">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-gray-900">Escribir una reseña</h3>
               <button
@@ -225,7 +235,7 @@ function Reviews({ data = [] }) {
                   Tu reseña
                 </label>
                 <textarea
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none bg-white shadow-sm"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:flor focus:border-transparent resize-none bg-white shadow-sm"
                   rows={5}
                   value={newReview.comentario}
                   onChange={(e) => handleInputChange("comentario", e.target.value)}
@@ -239,7 +249,7 @@ function Reviews({ data = [] }) {
                 <button
                   type="submit"
                   disabled={!newReview.comentario.trim()}
-                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  className="px-8 py-3 bg-gradient-to-r bg-flor text-black rounded-xl font-semibold hover:flor disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 shadow-lg"
                 >
                   Publicar reseña
                 </button>
@@ -258,7 +268,7 @@ function Reviews({ data = [] }) {
         {filteredAndSortedReviews.length > 0 ? (
           <div className="space-y-6">
             {filteredAndSortedReviews.map((review) => (
-              <div key={review.id} className="bg-gray-50 rounded-2xl p-6 hover:bg-gray-100 transition-colors duration-200">
+              <div key={review.id} className="bg-flor rounded-2xl p-6 hover:bg-flor transition-colors duration-200">
                 <div className="flex items-start gap-4">
                   <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
                     <UserIcon className="w-8 h-8 text-white" />
@@ -270,13 +280,13 @@ function Reviews({ data = [] }) {
                         <div className="flex">
                           {renderStars(review.puntuacion, false, 'w-5 h-5')}
                         </div>
-                        <span className="text-sm font-medium text-gray-600 bg-white px-3 py-1 rounded-full">
+                        <span className="text-sm font-medium text-gray-600 bg-flor-2 px-3 py-1 rounded-full">
                           {formatDate(review.fechaReview)}
                         </span>
                       </div>
                     </div>
 
-                    <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                    <div className="bg-flor-2 rounded-xl p-4 shadow-sm border border-gray-100">
                       <p className="text-gray-800 leading-relaxed">{review.comentario}</p>
                     </div>
 

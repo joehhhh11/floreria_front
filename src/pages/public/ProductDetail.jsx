@@ -14,8 +14,9 @@ import Reviews from "./Reviews";
 const ProductDetail = () => {
   const { id } = useParams();
   const product = useProductById(id);
+  const related= useRelatedProducts(id, product?.categoria?.nombre);
+
   const [showSuccess, setShowSuccess] = useState(false);
-  const related = useRelatedProducts(id, product?.category);
   const [isOpenModal , setIsOpenModal] = useState(false);
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
   const [message, setMessage] = useState("");
@@ -25,6 +26,9 @@ const ProductDetail = () => {
   if (!product) {
     return <p className="p-6 text-red-500">Producto no encontrado</p>;
   }
+
+  console.log('ProductDetail product:', product);
+  console.log('ProductDetail related:', related);
 
 
 

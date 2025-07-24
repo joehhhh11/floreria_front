@@ -6,6 +6,8 @@ import {
 import {
   TrendingUp, TrendingDown, DollarSign, Package, Users, Eye, Calendar, Download, Filter
 } from 'lucide-react';
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 import orderService from '@/service/orderService';
 import productService from '@/service/productService';
 
@@ -42,6 +44,8 @@ const Dashboard = () => {
         ]);
 
         setOrders(ordersData);
+        console.log("Ejemplo de order:", ordersData[23]);
+
         setProducts(productsData);
         setCategories(categoriesData);
       } catch (error) {
@@ -102,17 +106,72 @@ const Dashboard = () => {
     color: ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#0088FE'][i % 5]
   }));
 
-  // === Totales ===
   const totalVentas = salesData.reduce((sum, item) => sum + item.ventas, 0);
   const totalPedidos = salesData.reduce((sum, item) => sum + item.pedidos, 0);
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Cargando dashboard...</div>;
   }
+const exportToExcel = () => {
+  const wb = XLSX.utils.book_new();
+
+  // 1. Pedidos individuales
+  const pedidosData = orders.map(order => ({
+    ID: order.pedidoId,
+    Fecha: new Date(order.fechaCreacion).toLocaleDateString('es-PE'),
+    Cliente: order.user?.nombre || "Desconocido",
+    Correo: order.user?.correo || "Sin correo",
+    Estado: order.estado || "No definido",
+    Total: order.totalFinal ?? order.subtotal ?? 0,
+    TipoEntrega: order.tipoEntrega || "No especificado",
+    Dirección: order.direccionEnvio || "No indicada",
+    Productos: order.detalles?.map(
+      d => `${d.producto?.name || "Producto desconocido"} x${d.cantidad}`
+    ).join(', ') || "Sin productos"
+  }));
+  const pedidosSheet = XLSX.utils.json_to_sheet(pedidosData);
+  XLSX.utils.book_append_sheet(wb, pedidosSheet, "Pedidos");
+
+  // 2. Productos más vendidos
+  const topProductosSheet = XLSX.utils.json_to_sheet(
+    bestSellers.map(item => ({
+      Producto: item.product,
+      CantidadVendida: item.sales,
+      GananciaTotal: item.profit
+    }))
+  );
+  XLSX.utils.book_append_sheet(wb, topProductosSheet, "Top Productos");
+
+  // 3. Ventas mensuales
+  const ventasMensualesSheet = XLSX.utils.json_to_sheet(
+    salesData.map(item => ({
+      Mes: item.month,
+      TotalPedidos: item.pedidos,
+      TotalVentas: item.ventas
+    }))
+  );
+  XLSX.utils.book_append_sheet(wb, ventasMensualesSheet, "Ventas Mensuales");
+
+  // 4. Categorías
+  const categoriasSheet = XLSX.utils.json_to_sheet(
+    categoryData.map(cat => ({
+      Categoria: cat.name,
+      TotalProductos: cat.value
+    }))
+  );
+  XLSX.utils.book_append_sheet(wb, categoriasSheet, "Categorias");
+
+  // Descargar
+  const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+  saveAs(
+    new Blob([wbout], { type: "application/octet-stream" }),
+    `Reporte_Floristeria_${new Date().toISOString().slice(0, 10)}.xlsx`
+  );
+};
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
-      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard de Floristería</h1>
@@ -125,13 +184,15 @@ const Dashboard = () => {
           <button className="flex items-center gap-2 px-4 py-2 text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
             <Download className="w-4 h-4" /> Exportar
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-            <Eye className="w-4 h-4" /> Reporte Avanzado
-          </button>
+<button
+  onClick={exportToExcel}
+  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+>
+  <Eye className="w-4 h-4" /> Reporte Avanzado
+</button>
         </div>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard title="Ventas Totales" value={formatCurrency(totalVentas)} trend="up" icon={DollarSign} />
         <StatCard title="Productos Vendidos" value={totalPedidos} trend="up" icon={Package} />
@@ -139,7 +200,6 @@ const Dashboard = () => {
         <StatCard title="Pedidos Activos" value="23" trend="down" icon={Calendar} />
       </div>
 
-      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <h2 className="text-lg font-semibold mb-4">Ventas Mensuales</h2>
@@ -156,7 +216,6 @@ const Dashboard = () => {
           </ResponsiveContainer>
         </div>
 
-        {/* Categorías */}
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <h2 className="text-lg font-semibold mb-4">Distribución por Categoría</h2>
           <ResponsiveContainer width="100%" height={300}>
@@ -172,7 +231,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Más Vendidos */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <h2 className="text-lg font-semibold mb-4">Productos Más Vendidos</h2>

@@ -4,7 +4,15 @@ const ProductGallery = ({ images = [] }) => {
   const [mainImage, setMainImage] = useState(images[0] || '');
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
+  const resolveImageUrl = (url) => {
+    if (!url) return '';
+    return url.startsWith('http') || url.startsWith('/')
+      ? url
+      : BASE_URL + url;
+  };
+
   console.log('ProductGallery images:', images);
+
   return (
     <div className="flex md:flex-row flex-col-reverse gap-5 justify-center pb-5">
       <div className="flex md:flex-col gap-2">
@@ -12,7 +20,7 @@ const ProductGallery = ({ images = [] }) => {
           images.map((img, index) => (
             <img
               key={index}
-              src={ BASE_URL + img}
+              src={resolveImageUrl(img)}
               alt={`Miniatura ${index + 1}`}
               onClick={() => setMainImage(img)}
               className={`md:w-42 md:h-60 w-36 h-32 object-cover rounded cursor-pointer border-2 bg-black ${
@@ -29,7 +37,7 @@ const ProductGallery = ({ images = [] }) => {
 
       {mainImage ? (
         <img
-          src={BASE_URL +mainImage}
+          src={resolveImageUrl(mainImage)}
           alt="Imagen principal"
           className="md:w-[600px] md:h-[600px] w-[300px] h-[300px] object-cover rounded-lg mb-4 bg-black mr-5"
         />

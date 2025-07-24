@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { UserButton, SignInButton, useUser } from '@clerk/clerk-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { UserButton, SignInButton, useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 function NavbarIcons({ icons, isSignedIn: isSignedInProp, onIconClick }) {
   const { user, isSignedIn, isLoaded } = useUser();
   const navigate = useNavigate();
 
   const handleIconClick = (icon) => {
-    if (icon.name === 'search') {
-      navigate('/catalogo');
+    if (icon.name === "search") {
+      navigate("/catalogo");
     } else {
       icon.action?.();
     }
@@ -20,10 +20,8 @@ function NavbarIcons({ icons, isSignedIn: isSignedInProp, onIconClick }) {
     const completed = user.unsafeMetadata?.profileCompleted;
 
     const checkOrSetProfileMetadata = async () => {
-      // Si nunca se definió, inicialízalo como falso
-      // Si el perfil no está completo, redirige
       if (!completed) {
-        navigate('/complete-profile');
+        navigate("/complete-profile");
       }
     };
 
@@ -33,13 +31,29 @@ function NavbarIcons({ icons, isSignedIn: isSignedInProp, onIconClick }) {
   return (
     <>
       {icons.map((icon, index) => {
+        const renderIcon = () =>
+          typeof icon.icon === "string" ? (
+            <img src={icon.icon} alt={icon.name} className="w-6 h-6" />
+          ) : (
+            icon.icon
+          );
+
         if (icon.isUser) {
           return isSignedInProp ? (
-            <UserButton key={index} afterSignOutUrl="/" />
+            <UserButton
+              key={index}
+              afterSignOut={() => {
+                localStorage.clear();
+                window.location.href = "/";
+              }}
+            />
           ) : (
             <SignInButton key={index} mode="modal">
-              <button className="icon-link" onClick={onIconClick}>
-                <img src={icon.icon} alt={icon.name} className="icon" />
+              <button
+                className="icon-link cursor-pointer hover:scale-110 transition-transform duration-150 ease-in-out"
+                onClick={onIconClick}
+              >
+                {renderIcon()}
               </button>
             </SignInButton>
           );
@@ -51,7 +65,7 @@ function NavbarIcons({ icons, isSignedIn: isSignedInProp, onIconClick }) {
             onClick={() => handleIconClick(icon)}
             className="cursor-pointer hover:scale-110 transition-transform duration-150 ease-in-out"
           >
-            <img src={icon.icon} alt={icon.name} className="icon" />
+            {renderIcon()}
           </button>
         );
       })}

@@ -11,7 +11,7 @@ function Incomes() {
     const fetchData = async () => {
       try {
         const orders = await orderService.getAllOrders();
-        setIncomes(orders.map(mapOrderToIncome));   // ⬅️ transformamos aquí
+        setIncomes(orders.map(mapOrderToIncome));   
       } catch (err) {
         setError(err);
       } finally {
@@ -53,7 +53,6 @@ function Incomes() {
         </button>
       </div>
 
-      {/* Estadísticas rápidas */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div className="bg-white p-4 rounded-lg shadow">
           <h2 className="text-lg font-semibold mb-2">Total Ingresos</h2>
@@ -67,7 +66,6 @@ function Incomes() {
         </div>
       </div>
 
-      {/* Tabla de ingresos */}
       <div className="bg-white p-4 rounded-lg shadow">
         <Table columns={columns} data={incomes} />
       </div>

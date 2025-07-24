@@ -9,6 +9,7 @@ export const useRelatedProducts = (currentProductId, category) => {
       try {
         const data = await productService.getAllProducts();
         setAllProducts(data);
+        console.log("All products fetched:", data);
       } catch (err) {
         console.error("Error fetching products", err);
       }
@@ -17,14 +18,25 @@ export const useRelatedProducts = (currentProductId, category) => {
     fetchProducts();
   }, []);
 
-  const related = useMemo(() => {
-    if (!category) return [];
+const related = useMemo(() => {
+  if (!category) return [];
+
+  const filtrados = allProducts.filter(
+    (p) =>
+      p.categoria?.nombre === category &&
+      String(p.id) !== String(currentProductId)
+  );
+
+  // Si no hay productos relacionados, mostramos cualquiera menos el actual
+  if (filtrados.length === 0) {
     return allProducts
-      .filter(
-        (p) => p.categoria?.nombre === category && String(p.id) !== String(currentProductId)
-      )
+      .filter((p) => String(p.id) !== String(currentProductId))
       .slice(0, 4);
-  }, [allProducts, currentProductId, category]);
+  }
+
+  return filtrados.slice(0, 4);
+}, [allProducts, currentProductId, category]);
+
 
   return related;
 };

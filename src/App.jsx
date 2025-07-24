@@ -14,6 +14,7 @@ import CompleteProfile from "./pages/public/CompleteProfile";
 import RedirectOnSignIn from "./pages/public/RedirectOnSignIn";
 import AuthRedirect from "./service/AuthRedirect";
 import AuthWrapper from "./pages/public/AuthWrapper";
+import { SignIn } from "@clerk/clerk-react";
 
 import Login from "@/pages/admin/Login";
 import Dashboard from "@/pages/admin/Dashboard";
@@ -21,15 +22,22 @@ import Products from "@/pages/admin/Products";
 import Users from "@/pages/admin/Users";
 import Incomes from "@/pages/admin/Incomes";
 import Orders from "@/pages/admin/Orders";
-import ProtectedRoute from "@/service/ProtectedRoute"; // 🛡️ Revisa el rol en el token
+import ProtectedRoute from "@/service/ProtectedRoute"; 
+import Cupones from "@/pages/admin/Cupones";
+import History from "@/pages/public/History";
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <>
+      <Toaster position="bottom-right" />
       <RedirectOnSignIn />
-
       <Routes>
-        {/* Layout público */}
+      <Route path="/sign-in" element={<div className="flex justify-center h-screen items-center">
+        <SignIn  routing="path" path="/sign-in" />  </div>} />
+        
+      
+
         <Route element={<MainLayout />}>
           <Route path="/" element={<Inicio />} />
           <Route path="/catalogo" element={<Catalogo />} />
@@ -37,18 +45,16 @@ function App() {
           <Route path="/producto/:id" element={<ProductDetail />} />
           <Route path="/auth-redirect" element={<AuthRedirect />} />
 
-          {/* Rutas protegidas para usuarios comunes */}
           <Route element={<AuthWrapper />}>
             <Route path="/carrito" element={<Cart />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/complete-profile" element={<CompleteProfile />} />
+            <Route path="/historial" element={<History />} />
           </Route>
         </Route>
 
-        {/* Login público */}
         <Route path="/login" element={<Login />} />
 
-        {/* Rutas protegidas para ADMIN */}
         <Route
           path="/admin"
           element={
@@ -62,6 +68,7 @@ function App() {
           <Route path="usuarios" element={<Users />} />
           <Route path="ingresos" element={<Incomes />} />
           <Route path="pedidos" element={<Orders />} />
+          <Route path="cupones" element={<Cupones />} />
         </Route>
       </Routes>
     </>

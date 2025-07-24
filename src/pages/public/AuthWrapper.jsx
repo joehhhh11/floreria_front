@@ -1,30 +1,30 @@
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useSignIn } from "@clerk/clerk-react";
 import { useEffect } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import { syncClerkToBackend } from "../../service/syncClerkToBackend";
 
 const AuthWrapper = () => {
   const { user, isLoaded, isSignedIn } = useUser();
+  const { openSignIn } = useSignIn();
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("🧠 isLoaded:", isLoaded);
-    console.log("🔐 isSignedIn:", isSignedIn);
-    console.log("👤 user:", user);
+    if (isLoaded && !isSignedIn) {
+      console.log("🔐 Usuario no autenticado, abriendo modal de login...");
+      navigate("/sign-in"); // 🔓 Abre modal Clerk
+      return;
+    }
 
-    if (!isLoaded || !isSignedIn || !user) return;
+    if (!isLoaded || !user) return;
 
-    console.log("🚀 Ejecutando syncClerkToBackend...");
     syncClerkToBackend(user)
       .then(() => console.log("✅ syncClerkToBackend completado"))
       .catch((err) => console.error("❌ Error al sincronizar:", err));
 
-    console.log("📦 user.unsafeMetadata:", user.unsafeMetadata);
     if (user.unsafeMetadata?.profileCompleted !== true) {
-      console.log("⛔ Perfil incompleto, redirigiendo a /complete-profile");
       navigate("/complete-profile");
     }
-  }, [user, isLoaded, isSignedIn, navigate]);
+  }, [user, isLoaded, isSignedIn, navigate, openSignIn]);
 
   return <Outlet />;
 };

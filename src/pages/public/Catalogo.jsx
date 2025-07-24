@@ -22,6 +22,7 @@ const Catalogo = () => {
           ? await productService.getCategoryProducts(category)
           : await productService.getAllProducts();
         setProducts(data);
+        console.log("Productos cargados:", data);
       } catch (error) {
         console.error("Error al cargar productos:", error);
       }

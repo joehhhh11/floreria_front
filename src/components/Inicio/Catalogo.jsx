@@ -60,12 +60,10 @@ function Catalogo() {
               <div className="flex flex-col gap-2">
                 <h2 className="text-xl">{product.name}</h2>
                 <div className="flex gap-2">
-                  <p className="text-sm transition-opacity duration-300 group-hover:opacity-0">
+                  <p className="">
                     ${product.price}
                   </p>
-                  <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-flor-1 text-black px-3 py-1 rounded">
-                    Añadir al carrito
-                  </button>
+              
                 </div>
               </div>
             </div>

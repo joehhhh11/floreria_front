@@ -1,6 +1,7 @@
 import React from "react";
 import Table from "@/components/Panel/Table";
-const ActionModal = ({ isOpen, onClose, data, mode, products }) => {
+
+const ActionModal = ({ isOpen, onClose, data, mode, products, onEstadoChange }) => {
   if (!isOpen || !data) return null;
 
   const columns = [
@@ -11,33 +12,33 @@ const ActionModal = ({ isOpen, onClose, data, mode, products }) => {
     { accessorKey: "subtotal", header: "Precio" },
   ];
 
-
   const renderContent = () => {
     switch (mode) {
       case "view":
         return (
-          <>
-            <div>
-              <h3>Detalle del Pedido</h3>
-              <Table columns={columns} data={products} />
-            </div>
-          </>
+          <div>
+            <h3 className="text-lg font-bold mb-4">Detalle del Pedido</h3>
+            <Table columns={columns} data={products} />
+          </div>
         );
+
       case "edit":
         return (
-          <>
-            <h3 className="text-lg font-bold mb-4">Editar Pedido</h3>
-            <p className="text-sm mb-4 text-gray-700">
-              Aquí iría un formulario editable (puedes adaptarlo).
-            </p>
-            <pre className="text-xs bg-gray-100 p-2 rounded">
-              {JSON.stringify(data, null, 2)}
-            </pre>
-            <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded">
-              Guardar cambios
-            </button>
-          </>
+          <div>
+            <h3 className="text-lg font-bold mb-4">Editar Estado del Pedido</h3>
+            <select
+              className="border p-2 rounded w-full"
+              value={data.estado || "PENDIENTE" || "EN_PROCESO" || "ENTREGADO" || "CANCELADO"}
+              onChange={(e) => onEstadoChange(data.pedidoId, e.target.value)}
+            >
+              <option value="PENDIENTE">Pendiente</option>
+              <option value="EN_PROCESO">En proceso</option>
+              <option value="ENTREGADO">Entregado</option>
+              <option value="CANCELADO">Cancelado</option>
+            </select>
+          </div>
         );
+
       case "delete":
         return (
           <>
@@ -55,6 +56,7 @@ const ActionModal = ({ isOpen, onClose, data, mode, products }) => {
             </button>
           </>
         );
+
       default:
         return null;
     }
@@ -62,7 +64,7 @@ const ActionModal = ({ isOpen, onClose, data, mode, products }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded opacity- shadow-lg max-w-md w-full relative">
+      <div className="bg-white p-6 rounded shadow-lg max-w-md w-full relative">
         {renderContent()}
         <button
           onClick={onClose}

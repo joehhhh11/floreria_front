@@ -9,8 +9,10 @@ import {
 } from "@clerk/clerk-react";
 import NavbarLinks from "@/components/Navbar/NavbarLinks";
 import NavbarIcons from "@/components/Navbar/NavbarIcons";
-
+import {ShoppingBagIcon} from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 function Navbar() {
+  const navigate = useNavigate();
   const { user, isSignedIn } = useUser();
   const toggleCart = useStore((state) => state.toggleCart);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,7 +21,12 @@ function Navbar() {
     { name: "cart", icon: "/car.png", action: toggleCart },
     { name: "favorites", icon: "/favore.png" },
     { name: "user", icon: "/user.png", isUser: true },
-    { name: "search", icon: "/search.png" },
+        {
+      name: "history",
+      icon: <ShoppingBagIcon className="w-6 h-6" />,
+      action: () => navigate("/historial"), 
+    },
+
   ];
 
   const closeMenu = () => setIsMenuOpen(false);

@@ -45,6 +45,18 @@ function Orders() {
     setSelectedOrder(null);
     setModalMode(null);
   };
+const actualizarEstado = async (pedidoId, nuevoEstado) => {
+  try {
+    await orderService.updateOrderStatus(pedidoId, nuevoEstado); // ✅ aquí
+    const data = await orderService.getAllOrders();
+    setOrders(data);
+    closeModal();
+  } catch (err) {
+    console.error("Error al actualizar estado:", err);
+  }
+};
+
+
 
   const columns = [
     { accessorKey: "user.nombre", header: "Nombre del usuario" },
@@ -52,7 +64,32 @@ function Orders() {
     { accessorKey: "tipoEntrega", header: "Tipo de entrega" },
     { accessorKey: "totalFinal", header: "Total final" },
     { accessorKey: "fechaCreacion", header: "Fecha" },
-    { accessorKey: "cuponAplicado", header: "Estado" },
+    { accessorKey: "cuponAplicado", header: "Cupones" },
+    {
+  accessorKey: "estado",
+  header: "Estado del pedido",
+  cell: ({ getValue }) => {
+    const estado = getValue();
+
+    const colorMap = {
+      PENDIENTE: "bg-yellow-100 text-yellow-800",
+      ENVIADO: "bg-blue-100 text-blue-800",
+      ENTREGADO: "bg-green-100 text-green-800",
+      CANCELADO: "bg-red-100 text-red-800",
+    };
+
+    const color = colorMap[estado] || "bg-gray-100 text-gray-800";
+
+    return (
+      <span
+        className={`text-xs px-2 py-1 rounded-full font-medium ${color}`}
+      >
+        {estado}
+      </span>
+    );
+  },
+},
+
     {
       header: "Ver",
       cell: ({ row }) => (
@@ -98,7 +135,10 @@ function Orders() {
         data={selectedOrder}
         mode={modalMode}
         products={orderProducts}
+        onEstadoChange={actualizarEstado}
       />
+
+
     </div>
   );
 }

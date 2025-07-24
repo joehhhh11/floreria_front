@@ -20,11 +20,23 @@ const getProductById = async (id) => {
   return res.data;
 };
 
+const getCupones = async () => {
+  const res = await httpClient.get('/api/cupones');
+  return res.data;
+};
+
+const importProducts = async (data) => {
+  const res = await httpClient.post('/api/products/import', data);
+  return res.data;
+};
+
 const productService = {
   getAllProducts,
   getCategoryProducts,
   getAllCategories,
-  getProductById
+  getProductById,
+  getCupones,
+  importProducts
 };
 
 export default productService;

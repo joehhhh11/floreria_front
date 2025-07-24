@@ -1,16 +1,39 @@
-import React, { useState } from "react";
-import products from "@/service/productos.json";
+import React, { useState, useEffect } from "react";
+import productService from "../../service/productService";
 import Button from "@/components/Button";
 import { Link } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { useCartStore } from "@/store/cartStore";
+import toast from "react-hot-toast";
 
 function Products() {
-  const categories = [...new Set(products.map((p) => p.category))];
+  const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const addToCart = useCartStore((state) => state.addToCart);
 
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await productService.getAllProducts();
+        setProducts(data);
+        if (data.length > 0) {
+          const firstCategory = data[0].categoria?.nombre || "Otros";
+          setSelectedCategory(firstCategory);
+        }
+      } catch (err) {
+        console.error("Error fetching products", err);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const categories = [
+    ...new Set(products.map((p) => p.categoria?.nombre).filter(Boolean)),
+  ];
 
   const filteredProducts = products.filter(
-    (p) => p.category === selectedCategory
+    (p) => p.categoria?.nombre === selectedCategory
   );
 
   return (
@@ -39,9 +62,14 @@ function Products() {
               className="group relative flex flex-col gap-5 p-5  rounded-lg justify-center items-center  w-[320px]"
             >
               <img
-                src={product.images[0]}
+                src={
+                  product.imageUrls?.[0]?.startsWith("http") ||
+                  product.imageUrls?.[0]?.startsWith("/")
+                    ? product.imageUrls[0]
+                    : import.meta.env.VITE_BACKEND_URL + product.imageUrls?.[0]
+                }
                 alt={product.name}
-                className=" h-60 w-full object-cover bg-red-500"
+                className="h-60 w-full object-cover rounded-lg"
               />
               <div className="flex flex-col gap-2">
                 <h2 className="text-xl">{product.name}</h2>
@@ -50,7 +78,13 @@ function Products() {
                     ${product.price}
                   </p>
 
-                  <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-flor-1 text-black px-3 py-1 rounded">
+                  <button
+                    onClick={() => {
+                      addToCart(product);
+                      toast.success(`${product.name} agregado al carrito`);
+                    }}
+                    className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-flor-1 text-black px-3 py-1 rounded"
+                  >
                     Añadir al carrito
                   </button>
                 </div>
@@ -61,10 +95,12 @@ function Products() {
       </div>
       <div className="flex justify-center mt-10">
         <Link to="/catalogo">
-          <Button className="flex items-center gap-2"> Ver catálogo <ArrowRightIcon className="w-5 h-5" /> </Button>
+          <Button className="flex items-center gap-2">
+            {" "}
+            Ver catálogo <ArrowRightIcon className="w-5 h-5" />{" "}
+          </Button>
         </Link>
       </div>
-      
     </>
   );
 }

@@ -33,8 +33,6 @@ const Users = () => {
 				</span>
 			),
 		},
-		{ accessorKey: "orders", header: "Pedidos" },
-		{ accessorKey: "lastOrder", header: "Último Pedido" },
 		{
 			id: "actions",
 			header: "Acciones",

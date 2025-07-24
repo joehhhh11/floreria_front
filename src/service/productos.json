@@ -6,7 +6,7 @@
     "description": "Un ramo clásico y elegante con 12 rosas rojas frescas, ideal para expresar amor y pasión en cualquier ocasión especial.",
     "price": 2500,
     "images": [
-      "/images/rosas-rojas-1.jpg",
+      "https://i.pinimg.com/736x/0e/7f/93/0e7f93c984587d2bc2aaf221680a672c.jpg",
       "/images/rosas-rojas-2.jpg"
     ],
     "stock": 10,
@@ -34,7 +34,7 @@
     "description": "Colorido bouquet de tulipanes de temporada que alegra cualquier espacio con su belleza natural y vibrante.",
     "price": 1800,
     "images": [
-      "/images/tulipanes-primavera-1.jpg",
+      "https://i.pinimg.com/736x/43/c2/3c/43c23c312f3ac490da753ff563db9197.jpg",
       "/images/tulipanes-primavera-2.jpg"
     ],
     "stock": 8,
@@ -57,7 +57,7 @@
     "description": "Una mezcla fresca y variada de flores de temporada, perfecta para alegrar cualquier habitación o regalar con cariño.",
     "price": 2800,
     "images": [
-      "/images/ramo-mixto-primavera-1.jpg",
+      "https://i.pinimg.com/736x/74/e8/c9/74e8c9d2b95d7ef876e8c3aef845cf63.jpg",
       "/images/ramo-mixto-primavera-2.jpg"
     ],
     "stock": 12,
@@ -78,7 +78,7 @@
     "description": "Ramo elegante de lirios blancos que simbolizan pureza y paz, ideal para momentos especiales y ceremonias.",
     "price": 2200,
     "images": [
-      "/images/lirios-blancos-1.jpg",
+      "https://i.pinimg.com/736x/6c/ef/6b/6cef6bc734185d5671cd1b8b4f6f225f.jpg",
       "/images/lirios-blancos-2.jpg"
     ],
     "stock": 7,
@@ -99,7 +99,7 @@
     "description": "Ramo lleno de energía con girasoles grandes y brillantes, ideal para alegrar el día de alguien especial.",
     "price": 2000,
     "images": [
-      "/images/girasoles-1.jpg",
+      "https://i.pinimg.com/736x/f3/66/e9/f366e9d84c4bc704636a6d43e6a15293.jpg",
       "/images/girasoles-2.jpg"
     ],
     "stock": 15,
@@ -120,7 +120,7 @@
     "description": "Elegante ramo de peonías rosadas, flores delicadas y con aroma suave, perfectas para un regalo especial.",
     "price": 3000,
     "images": [
-      "/images/peonias-1.jpg",
+      "https://i.pinimg.com/736x/1b/fa/92/1bfa9247c35767c200ad587968057279.jpg",
       "/images/peonias-2.jpg"
     ],
     "stock": 6,
