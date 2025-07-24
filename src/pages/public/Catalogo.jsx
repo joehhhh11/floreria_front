@@ -43,6 +43,7 @@ const Catalogo = () => {
     currentPage,
     perPage,
   });
+  console.log("📦 Productos filtrados:", paginated);
 
   return (
     <div className="p-6 md:w-[70vw] mx-auto">

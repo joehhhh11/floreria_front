@@ -30,13 +30,19 @@ const importProducts = async (data) => {
   return res.data;
 };
 
+const postReview = async (data) => {
+  const res = await httpClient.post('/api/reviews', data);
+  return res.data;
+};
+
 const productService = {
   getAllProducts,
   getCategoryProducts,
   getAllCategories,
   getProductById,
   getCupones,
-  importProducts
+  importProducts,
+  postReview,
 };
 
 export default productService;

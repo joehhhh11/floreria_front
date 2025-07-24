@@ -18,12 +18,18 @@ const updateCupon = async (codigo, data) => {
   const res = await httpClient.put(`/api/cupones/estado?codigo=${codigo}&activo=${data.active}`);
   return res.data;
 };
+const getCuponByCodigo = async (codigo) => {
+  const res = await httpClient.get(`/api/cupones?codigo=${codigo}`);
+  return res.data;
+};
+
 
 const productService = {
   deleteCupon,
   createCupon,
   getCupones,
-  updateCupon
+  updateCupon,
+  getCuponByCodigo
 };
 
 export default productService;

@@ -11,7 +11,7 @@ const AuthWrapper = () => {
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
       console.log("🔐 Usuario no autenticado, abriendo modal de login...");
-      navigate("/sign-in"); // 🔓 Abre modal Clerk
+      navigate("/sign-in");
       return;
     }
 

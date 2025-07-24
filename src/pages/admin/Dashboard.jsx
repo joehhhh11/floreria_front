@@ -10,6 +10,7 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import orderService from '@/service/orderService';
 import productService from '@/service/productService';
+import userService from "@/service/userService";
 
 const StatCard = ({ title, value, icon: Icon, trend }) => (
   <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between">
@@ -28,6 +29,12 @@ const Dashboard = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState([]);
+
+const getUser = async () => {
+  const users = await userService.getAllUsers();
+  return users;
+};
 
   const formatCurrency = (value) => new Intl.NumberFormat('es-PE', {
     style: 'currency',
@@ -55,6 +62,7 @@ const Dashboard = () => {
       }
     };
     fetchData();
+    getUser().then(setUser);
   }, []);
 
   const salesData = orders.reduce((acc, order) => {
@@ -115,7 +123,6 @@ const Dashboard = () => {
 const exportToExcel = () => {
   const wb = XLSX.utils.book_new();
 
-  // 1. Pedidos individuales
   const pedidosData = orders.map(order => ({
     ID: order.pedidoId,
     Fecha: new Date(order.fechaCreacion).toLocaleDateString('es-PE'),
@@ -132,7 +139,6 @@ const exportToExcel = () => {
   const pedidosSheet = XLSX.utils.json_to_sheet(pedidosData);
   XLSX.utils.book_append_sheet(wb, pedidosSheet, "Pedidos");
 
-  // 2. Productos más vendidos
   const topProductosSheet = XLSX.utils.json_to_sheet(
     bestSellers.map(item => ({
       Producto: item.product,
@@ -142,7 +148,6 @@ const exportToExcel = () => {
   );
   XLSX.utils.book_append_sheet(wb, topProductosSheet, "Top Productos");
 
-  // 3. Ventas mensuales
   const ventasMensualesSheet = XLSX.utils.json_to_sheet(
     salesData.map(item => ({
       Mes: item.month,
@@ -152,7 +157,6 @@ const exportToExcel = () => {
   );
   XLSX.utils.book_append_sheet(wb, ventasMensualesSheet, "Ventas Mensuales");
 
-  // 4. Categorías
   const categoriasSheet = XLSX.utils.json_to_sheet(
     categoryData.map(cat => ({
       Categoria: cat.name,
@@ -161,7 +165,6 @@ const exportToExcel = () => {
   );
   XLSX.utils.book_append_sheet(wb, categoriasSheet, "Categorias");
 
-  // Descargar
   const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
   saveAs(
     new Blob([wbout], { type: "application/octet-stream" }),
@@ -196,8 +199,8 @@ const exportToExcel = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard title="Ventas Totales" value={formatCurrency(totalVentas)} trend="up" icon={DollarSign} />
         <StatCard title="Productos Vendidos" value={totalPedidos} trend="up" icon={Package} />
-        <StatCard title="Clientes Nuevos" value="156" trend="up" icon={Users} />
-        <StatCard title="Pedidos Activos" value="23" trend="down" icon={Calendar} />
+        <StatCard title="Clientes Nuevos" value={user.length} trend="up" icon={Users} />
+        <StatCard title="Pedidos Activos" value={orders.length} trend="down" icon={Calendar} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">

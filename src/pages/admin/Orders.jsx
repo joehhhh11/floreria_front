@@ -64,7 +64,14 @@ const actualizarEstado = async (pedidoId, nuevoEstado) => {
     { accessorKey: "tipoEntrega", header: "Tipo de entrega" },
     { accessorKey: "totalFinal", header: "Total final" },
     { accessorKey: "fechaCreacion", header: "Fecha" },
-    { accessorKey: "cuponAplicado", header: "Cupones" },
+    {
+  accessorKey: "cuponAplicado",
+  header: "Cupón",
+  cell: ({ getValue }) => {
+    const value = getValue();
+    return value ? value : <span className="italic text-gray-500">Sin cupón</span>;
+  },
+},
     {
   accessorKey: "estado",
   header: "Estado del pedido",

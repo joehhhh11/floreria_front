@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import httpClient from "../../api/httpClient";
+import productService from "../../service/cuponService";
 import {
   StarIcon,
   UserCircleIcon,
@@ -27,17 +28,6 @@ function Reviews({ data = [] }) {
     return products;
   };
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const res = await httpClient.get(`/api/reviews/product/${id}`);
-        setReviews(res.data);
-      } catch (err) {
-        console.error("Error al cargar reseñas", err);
-      }
-    };
-    fetchReviews();
-  }, [id]);
 
   const handleInputChange = (field, value) => {
     setNewReview((prev) => ({ ...prev, [field]: value }));
@@ -45,11 +35,11 @@ function Reviews({ data = [] }) {
 
 const handleSubmit = async () => {
   try {
-    const response = await axios.post("/api/reviews", {
-      comentario,
-      puntuacion,
-      productoId: product.id,
-    });
+    const res = await httpClient.post("/api/reviews", {
+        productoId: Number(id),
+        comentario: newReview.comentario,
+        puntuacion: newReview.puntuacion,
+      });
 
     const nuevaReview = {
       id: Date.now(), 
@@ -58,8 +48,7 @@ const handleSubmit = async () => {
       fechaReview: new Date().toISOString(),
       usuario: currentUser?.username || "Usuario",
     };
-
-    setProduct((prev) => ({
+  setProduct((prev) => ({
       ...prev,
       reviews: [...prev.reviews, nuevaReview],
     }));

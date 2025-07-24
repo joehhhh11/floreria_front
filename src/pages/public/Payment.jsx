@@ -5,11 +5,32 @@ import { useCartStore } from "@/store/cartStore";
 import orderService from "../../service/orderService";
 import paymentService from "../../service/paymentService";
 import axios from "axios";
+import productService from "@/service/cuponService";
 function Payment() {
   const cart = useCartStore((state) => state.cart);
   const [formData, setFormData] = useState(null);
   const API_URL = import.meta.env.VITE_BACKEND_URL;
+  const [cuponInput, setCuponInput] = useState("");
+  const [cupon, setCupon] = useState(null);
 
+  const [cuponStatus, setCuponStatus] = useState(null);
+  const aplicarCupon = async () => {
+    if (!cuponInput) {
+      setCupon(null);
+      setCuponStatus(null);
+      return;
+    }
+
+    try {
+      const cupon = await productService.getCuponByCodigo(cuponInput);
+      setCupon(cupon);
+      console.log("Cupón obtenido:", cupon);
+      setCuponStatus("ok");
+    } catch (error) {
+      setCupon(null);
+      setCuponStatus("error");
+    }
+  };
   const handlePayment = async () => {
     if (!formData) return alert("Faltan datos de envío");
 
@@ -17,10 +38,10 @@ function Payment() {
       const orderRes = await orderService.createOrder({
         direccionEnvio: `${formData.address}, ${formData.apartment}, ${formData.city}, ${formData.distrito}`,
         tipoEntrega: formData.tipoEntrega,
-        cuponId: null,
+        cuponId: cupon?.id || null,
         estado: "PENDIENTE",
         productos: cart.map((item) => ({
-          productoId: item.product.id,
+          productoId: item.product.id, 
           cantidad: item.quantity,
         })),
       });
@@ -33,17 +54,51 @@ function Payment() {
       console.log("Stripe URL:", stripeUrl);
 
       window.location.href = stripeUrl;
-
     } catch (error) {
       console.error("Error durante el pago:", error);
     }
   };
+  const subtotal = cart.reduce(
+    (acc, item) => acc + item.product.price * item.quantity,
+    0
+  );
+  const descuento = cupon?.descuentoPorcentaje ? (subtotal * cupon.descuentoPorcentaje) / 100 : 0;
 
+  const total = subtotal - descuento;
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-[70vw] mx-auto pt-20 pb-20">
-      <div>
+      <div className="space-y-4">
         <FormPayment onChange={setFormData} />
-        
+        <div className="mb-4">
+          <label className="text-sm font-medium text-gray-700 block mb-1">
+            Código de cupón
+          </label>
+          <div className="flex gap-2">
+            <input
+              value={cuponInput}
+              onChange={(e) => setCuponInput(e.target.value)}
+              className="flex-1 p-2 border rounded"
+              placeholder="Ingrese su código"
+            />
+            <button
+              onClick={aplicarCupon}
+              className="px-4 py-2 bg-amber-600 text-white rounded hover:bg-amber-700"
+            >
+              Aplicar
+            </button>
+          </div>
+
+          {cuponStatus === "ok" && (
+            <p className="text-green-600 text-sm mt-1">
+              Cupón aplicado correctamente ✅
+            </p>
+          )}
+          {cuponStatus === "error" && (
+            <p className="text-red-500 text-sm mt-1">
+              Cupón no válido o expirado ❌
+            </p>
+          )}
+        </div>
       </div>
 
       <div className="bg-[#F0F0F0] p-10 h-[50vh]">
@@ -83,14 +138,18 @@ function Payment() {
             </div>
           ))}
           <div className="flex justify-between">
+            <span className="">Subtotal</span>
+            <p>${subtotal.toFixed(2)}</p>
+          </div>
+          {cupon && (
+            <div className="flex justify-between text-green-700">
+              <span>Descuento ({cupon.descuento}%)</span>
+              <span>- ${descuento.toFixed(2)}</span>
+            </div>
+          )}
+          <div className="flex justify-between">
             <span className="font-bold">TOTAL DEL PEDIDO</span>
-            <p>
-              $
-              {cart.reduce(
-                (acc, item) => acc + item.product.price * item.quantity,
-                0
-              )}
-            </p>
+            <p>${total.toFixed(2)}</p>
           </div>
         </div>
       </div>

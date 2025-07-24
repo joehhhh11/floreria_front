@@ -38,7 +38,7 @@ function History() {
         border: 'border-green-200',
         label: 'Entregado',
       },
-      'cancelado': {
+      'CANCELADO': {
         icon: XCircle,
         color: 'text-red-600',
         bg: 'bg-red-50',
@@ -58,7 +58,7 @@ function History() {
     { key: 'PENDIENTE', label: 'Pendientes', count: orders.filter(o => o.estado === 'PENDIENTE').length },
     { key: 'EN_PROCESO', label: 'En Proceso', count: orders.filter(o => o.estado === 'en-proceso').length },
     { key: 'ENTREGADO', label: 'Entregados', count: orders.filter(o => o.estado === 'entregado').length },
-    { key: 'cancelado', label: 'Cancelados', count: orders.filter(o => o.estado === 'cancelado').length }
+    { key: 'CANCELADO', label: 'Cancelados', count: orders.filter(o => o.estado === 'cancelado').length }
   ];
 
   return (

@@ -25,18 +25,7 @@ function Incomes() {
     { accessorKey: "amount",   header: "Monto ($)" },
     { accessorKey: "date",     header: "Fecha" },
     { accessorKey: "method",   header: "Método de Pago" },
-    {
-      id: "actions",
-      header: "Acciones",
-      cell: ({ row }) => (
-        <button
-          onClick={() => alert(`Ver ingreso de ${row.original.customer}`)}
-          className="text-blue-600 hover:underline"
-        >
-          Ver
-        </button>
-      ),
-    },
+
   ];
   if (loading) return <p className="p-6">Cargando ingresos…</p>;
   if (error)   return <p className="p-6 text-red-600">Error: {error.message}</p>;
@@ -47,10 +36,7 @@ function Incomes() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Ingresos</h1>
-        <button onClick={() => window.print()}
-                className="bg-green-600 text-white px-4 py-2 rounded">
-          Imprimir reporte
-        </button>
+
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
