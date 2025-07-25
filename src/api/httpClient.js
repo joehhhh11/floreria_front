@@ -8,16 +8,24 @@ const httpClient = axios.create({
 
 httpClient.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token;
-  const publicEndpoints = [
+
+  // Define rutas públicas solo si son GET
+  const publicGetEndpoints = [
     '/api/products',
     '/api/category',
   ];
-  const isPublic = publicEndpoints.some(endpoint => config.url.startsWith(endpoint));
-  if (token && !isPublic) {
+
+  const isPublicGet = config.method === 'get' &&
+    publicGetEndpoints.some(endpoint => config.url === endpoint);
+
+  // Inyectar token solo si no es un GET público
+  if (token && !isPublicGet) {
     config.headers.Authorization = `Bearer ${token}`;
     console.log("Token usado:", token);
   }
+
   return config;
 });
+
 
 export default httpClient;

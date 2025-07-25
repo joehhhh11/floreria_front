@@ -38,17 +38,12 @@ const Users = () => {
 			header: "Acciones",
 			cell: ({ row }) => (
 				<div className="flex gap-2">
-					<button
-						onClick={() => alert(`Ver detalles de ${row.original.name}`)}
-						className="text-blue-600 hover:underline"
-					>
-						Ver
-					</button>
+
 					<button
 						onClick={() => alert(`Editar usuario ${row.original.name}`)}
-						className="text-green-600 hover:underline"
+						className="text-red-600 hover:underline"
 					>
-						Editar
+						Eliminar
 					</button>
 				</div>
 			),

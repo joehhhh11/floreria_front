@@ -35,6 +35,15 @@ const postReview = async (data) => {
   return res.data;
 };
 
+const updateProduct = async (id, data) => {
+  const res = await httpClient.put(`/api/products/${id}`, data);
+  return res.data;
+};
+const deleteProduct = async (id) => {
+  const res = await httpClient.delete(`/api/products/${id}`);
+  return res.data;
+};
+
 const productService = {
   getAllProducts,
   getCategoryProducts,
@@ -43,6 +52,8 @@ const productService = {
   getCupones,
   importProducts,
   postReview,
+  updateProduct,
+  deleteProduct,
 };
 
 export default productService;
